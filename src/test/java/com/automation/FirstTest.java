@@ -1,5 +1,6 @@
 package com.automation;
 
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
@@ -10,10 +11,13 @@ public class FirstTest {
     private WebDriver driver;
 
     @Test
-    public void firstTest() {
+    public void dummyTest() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.get("https://askomdch.com");
         driver.quit();
+        Assertions.assertThat("asd")
+            .isEqualTo("asd");
     }
 
 }
