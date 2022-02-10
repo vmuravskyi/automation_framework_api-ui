@@ -1,23 +1,27 @@
 package com.automation;
 
+import com.automation.pom.base.BaseTest;
+import com.automation.pom.pages.HomePage;
+import com.automation.pom.pages.StorePage;
 import org.assertj.core.api.Assertions;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class FirstTest {
+public class FirstTest extends BaseTest {
 
-    private WebDriver driver;
+    private final String expectedSearchTitle = "Search results: “Blue";
+    private final String searchText = "Blue Shoes";
+
 
     @Test
     public void dummyTest() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.get("https://askomdch.com");
-        driver.quit();
-        Assertions.assertThat("asd")
-            .isEqualTo("asd");
+        HomePage homePage = new HomePage(driver);
+        StorePage storePage = homePage.clickStoreMenuLink();
+        storePage.search(searchText);
+
+        Assertions.assertThat(storePage.getTitle())
+            .isEqualTo(expectedSearchTitle);
+
+        storePage.clickAddToCard(searchText);
     }
 
 }
