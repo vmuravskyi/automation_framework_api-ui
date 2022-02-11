@@ -17,35 +17,42 @@ public class StorePage extends BasePage {
     }
 
     private StorePage enterTextInSearchField(String text) {
+        LOGGER.debug("Entering text to searchField [{}]", searchField);
         driver.findElement(searchField).sendKeys(text);
         return this;
     }
 
     private StorePage clickSearchButton() {
+        LOGGER.debug("Clicking searchButton [{}]", searchButton);
         driver.findElement(searchButton).click();
         return this;
     }
 
     private By getAddToCardButtonElement(String productName) {
+        LOGGER.debug("Adding {} to cart", productName);
         return By.xpath("//a[@aria-label='Add “" + productName + "” to your cart']");
     }
 
     public StorePage clickAddToCard(String productName) {
         By addToCardButton = getAddToCardButtonElement(productName);
+        LOGGER.debug("Clicking addToCardButton [{}]", addToCardButton);
         driver.findElement(addToCardButton).click();
         return this;
     }
 
     public CartPage clickViewCard() {
+        LOGGER.debug("Clicking viewCartLink [{}]", viewCartLink);
         driver.findElement(viewCartLink).click();
         return new CartPage(driver);
     }
 
     public String getTitle() {
+        LOGGER.debug("Getting title [{}]", title);
         return driver.findElement(title).getText();
     }
 
     public StorePage search(String text) {
+        LOGGER.debug("Searching {} in", text);
         enterTextInSearchField(text).clickSearchButton();
         return this;
     }

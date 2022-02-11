@@ -5,6 +5,8 @@ import com.automation.pom.pages.CartPage;
 import com.automation.pom.pages.CheckOutPage;
 import com.automation.pom.pages.HomePage;
 import com.automation.pom.pages.StorePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
