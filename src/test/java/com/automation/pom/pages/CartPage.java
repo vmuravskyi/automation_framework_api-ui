@@ -1,0 +1,24 @@
+package com.automation.pom.pages;
+
+import com.automation.pom.base.BasePage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class CartPage extends BasePage {
+
+    private By productName = By.xpath("//td[@class='product-name']");
+    private By checkoutButton = By.xpath("//a[@class='checkout-button button alt wc-forward']");
+
+    public CartPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public String getProductName() {
+        return driver.findElement(productName).getText();
+    }
+
+    public CheckOutPage checkout() {
+        driver.findElement(checkoutButton).click();
+        return new CheckOutPage(driver);
+    }
+}

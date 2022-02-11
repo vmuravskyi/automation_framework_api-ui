@@ -10,6 +10,7 @@ public class StorePage extends BasePage {
     private final By searchButton = By.xpath("//button[@value='Search']");
     private final By title = By.xpath("//h1[@class='woocommerce-products-header__title page-title']");
     private final By resultItem = By.xpath("//ul[@class='products columns-4']/li");
+    private final By viewCartLink = By.xpath("//div[@class='ast-cart-menu-wrap']");
 
     public StorePage(WebDriver driver) {
         super(driver);
@@ -35,8 +36,13 @@ public class StorePage extends BasePage {
         return this;
     }
 
+    public CartPage clickViewCard() {
+        driver.findElement(viewCartLink).click();
+        return new CartPage(driver);
+    }
+
     public String getTitle() {
-        return driver.findElement(searchField).getText();
+        return driver.findElement(title).getText();
     }
 
     public StorePage search(String text) {
