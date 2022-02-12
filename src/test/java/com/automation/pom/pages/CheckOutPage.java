@@ -1,11 +1,16 @@
 package com.automation.pom.pages;
 
 import com.automation.pom.base.BasePage;
+import com.automation.pom.objects.BillingAddress;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class CheckOutPage extends BasePage {
+
+    private static Logger LOGGER = LogManager.getLogger();
 
     private By firstNameField = By.xpath("//input[@name='billing_first_name']");
     private By lastNameField = By.xpath("//input[@name='billing_last_name']");
@@ -17,10 +22,22 @@ public class CheckOutPage extends BasePage {
     private By stateDropDownButton = By.xpath("//span[@id='select2-billing_state-container']");
     private By stateDropDownInputField = By.xpath("//input[@class='select2-search__field']");
 
-    private By successNotice = By.xpath("//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
+    private By successNotice = By.xpath(
+        "//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
 
     public CheckOutPage(WebDriver driver) {
         super(driver);
+    }
+
+    public CheckOutPage setBillingAddressWithDefaultState(BillingAddress billingAddress) {
+        enterFirstName(billingAddress.getFirstName());
+        enterLastName(billingAddress.getLastName());
+        enterAddressLineFieldOne(billingAddress.getAddressLineOne());
+        enterCity(billingAddress.getCity());
+        enterPostcode(billingAddress.getPostcode());
+        enterEmail(billingAddress.getEmail());
+        placeOrder();
+        return this;
     }
 
     public CheckOutPage enterFirstName(String text) {

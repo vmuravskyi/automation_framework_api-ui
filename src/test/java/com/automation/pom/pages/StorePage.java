@@ -1,10 +1,14 @@
 package com.automation.pom.pages;
 
 import com.automation.pom.base.BasePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class StorePage extends BasePage {
+
+    private static Logger LOGGER = LogManager.getLogger();
 
     private final By searchField = By.id("woocommerce-product-search-field-0");
     private final By searchButton = By.xpath("//button[@value='Search']");

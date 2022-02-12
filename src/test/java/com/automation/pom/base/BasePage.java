@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class BasePage {
 
-    public static Logger LOGGER = LogManager.getLogger();
+    private static Logger LOGGER = LogManager.getLogger();
 
     protected WebDriver driver;
 
