@@ -15,6 +15,7 @@ public class StorePage extends BasePage {
     private final By title = By.xpath("//h1[@class='woocommerce-products-header__title page-title']");
     private final By resultItem = By.xpath("//ul[@class='products columns-4']/li");
     private final By viewCartLink = By.xpath("//div[@class='ast-cart-menu-wrap']");
+    private final By addedToCart = By.xpath("//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart added']");
 
     public StorePage(WebDriver driver) {
         super(driver);
@@ -22,11 +23,13 @@ public class StorePage extends BasePage {
 
     private StorePage enterTextInSearchField(String text) {
         LOGGER.debug("Entering text to searchField [{}]", searchField);
+        waitUntilElementToBeClickable(searchField);
         driver.findElement(searchField).sendKeys(text);
         return this;
     }
 
     private StorePage clickSearchButton() {
+        waitUntilElementToBeClickable(searchButton);
         LOGGER.debug("Clicking searchButton [{}]", searchButton);
         driver.findElement(searchButton).click();
         return this;
@@ -39,18 +42,22 @@ public class StorePage extends BasePage {
 
     public StorePage clickAddToCard(String productName) {
         By addToCardButton = getAddToCardButtonElement(productName);
+        waitUntilElementToBeClickable(addToCardButton);
         LOGGER.debug("Clicking addToCardButton [{}]", addToCardButton);
         driver.findElement(addToCardButton).click();
+        waitUntilPresenceOfAllElementsLocatedBy(addedToCart);
         return this;
     }
 
     public CartPage clickViewCard() {
+        waitUntilElementToBeClickable(viewCartLink);
         LOGGER.debug("Clicking viewCartLink [{}]", viewCartLink);
         driver.findElement(viewCartLink).click();
         return new CartPage(driver);
     }
 
     public String getTitle() {
+        waitUntilElementToBeVisible(title);
         LOGGER.debug("Getting title [{}]", title);
         return driver.findElement(title).getText();
     }

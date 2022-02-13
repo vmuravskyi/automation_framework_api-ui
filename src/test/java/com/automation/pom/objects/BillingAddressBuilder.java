@@ -44,12 +44,12 @@ public class BillingAddressBuilder {
 
     public BillingAddress build() {
         dto
-            .setFirstName(firstName)
-            .setLastName(lastName)
-            .setAddressLineOne(addressLineOne)
-            .setCity(city)
-            .setPostcode(postcode)
-            .setEmail(email);
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setAddressLineOne(addressLineOne)
+                .setCity(city)
+                .setPostcode(postcode)
+                .setEmail(email);
         return dto;
     }
 

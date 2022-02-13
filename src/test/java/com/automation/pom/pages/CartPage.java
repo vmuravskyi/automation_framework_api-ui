@@ -18,11 +18,16 @@ public class CartPage extends BasePage {
     }
 
     public String getProductName() {
+        LOGGER.debug("Getting product name");
+        waitUntilElementToBeVisible(productName);
         return driver.findElement(productName).getText();
     }
 
     public CheckOutPage checkout() {
+        LOGGER.debug("Checking out");
+        waitUntilElementToBeClickable(checkoutButton);
         driver.findElement(checkoutButton).click();
         return new CheckOutPage(driver);
     }
+
 }

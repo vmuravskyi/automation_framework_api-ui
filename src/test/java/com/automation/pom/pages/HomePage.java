@@ -22,6 +22,8 @@ public class HomePage extends BasePage {
     }
 
     public StorePage navigateToStoreUsingMenu() {
+        waitUntilPresenceOfElementLocatedBy(storeMenuLink);
+        waitUntilElementToBeClickable(storeMenuLink);
         LOGGER.debug("Clicking storeMenuLink [{}]", storeMenuLink);
         driver.findElement(storeMenuLink).click();
         return new StorePage(driver);

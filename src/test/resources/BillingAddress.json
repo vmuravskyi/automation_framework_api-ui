@@ -1,8 +1,10 @@
 {
     "firstName": "Volodymyr",
     "lastName": "Muravskyi",
+    "country": "UA",
     "addressLineOne": "Street",
     "city": "Lviv",
+    "state": "LV",
     "postcode": "12345",
     "email": "v.muravskyi@gmail.com"
 }

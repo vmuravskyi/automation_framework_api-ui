@@ -12,6 +12,8 @@ public class BillingAddress {
     private String city;
     private String postcode;
     private String email;
+    private String country;
+    private String state;
 
     public BillingAddress() {
         // empty default constructor
@@ -71,6 +73,24 @@ public class BillingAddress {
         return this;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public BillingAddress setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public BillingAddress setState(String state) {
+        this.state = state;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -84,36 +104,42 @@ public class BillingAddress {
         BillingAddress that = (BillingAddress) o;
 
         return new EqualsBuilder()
-            .append(firstName, that.firstName)
-            .append(lastName, that.lastName)
-            .append(addressLineOne, that.addressLineOne)
-            .append(city, that.city)
-            .append(postcode, that.postcode)
-            .append(email, that.email).isEquals();
+                .append(firstName, that.firstName)
+                .append(lastName, that.lastName)
+                .append(addressLineOne, that.addressLineOne)
+                .append(city, that.city)
+                .append(postcode, that.postcode)
+                .append(email, that.email)
+                .append(country, that.country)
+                .append(state, that.state).isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(firstName)
-            .append(lastName)
-            .append(addressLineOne)
-            .append(city)
-            .append(postcode)
-            .append(email)
-            .toHashCode();
+                .append(firstName)
+                .append(lastName)
+                .append(addressLineOne)
+                .append(city)
+                .append(postcode)
+                .append(email)
+                .append(country)
+                .append(state)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-            .append("firstName", firstName)
-            .append("lastName", lastName)
-            .append("addressLineOne", addressLineOne)
-            .append("city", city)
-            .append("postcode", postcode)
-            .append("email", email)
-            .toString();
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("addressLineOne", addressLineOne)
+                .append("city", city)
+                .append("postcode", postcode)
+                .append("email", email)
+                .append("country", country)
+                .append("state", state)
+                .toString();
     }
 
 }

@@ -5,8 +5,9 @@ import com.automation.pom.objects.BillingAddress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class CheckOutPage extends BasePage {
 
@@ -19,28 +20,21 @@ public class CheckOutPage extends BasePage {
     private By postcode = By.xpath("//input[@id='billing_postcode']");
     private By email = By.xpath("//input[@id='billing_email']");
     private By placeOrderButton = By.xpath("//button[@id='place_order']");
-    private By stateDropDownButton = By.xpath("//span[@id='select2-billing_state-container']");
+    private By countryDropDown = By.id("billing_country");
+    private By stateDropDown = By.id("billing_state");
     private By stateDropDownInputField = By.xpath("//input[@class='select2-search__field']");
+    private By overlay = By.cssSelector(".blockUI.blockOverlay");
+    private By directBankTransferRadioButton = By.id("payment_method_bacs");
 
     private By successNotice = By.xpath(
-        "//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
+            "//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
 
     public CheckOutPage(WebDriver driver) {
         super(driver);
     }
 
-    public CheckOutPage setBillingAddressWithDefaultState(BillingAddress billingAddress) {
-        enterFirstName(billingAddress.getFirstName());
-        enterLastName(billingAddress.getLastName());
-        enterAddressLineFieldOne(billingAddress.getAddressLineOne());
-        enterCity(billingAddress.getCity());
-        enterPostcode(billingAddress.getPostcode());
-        enterEmail(billingAddress.getEmail());
-        placeOrder();
-        return this;
-    }
-
     public CheckOutPage enterFirstName(String text) {
+        waitUntilElementToBeClickable(firstNameField);
         driver.findElement(firstNameField).clear();
         driver.findElement(firstNameField).sendKeys(text);
         return this;
@@ -77,20 +71,49 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckOutPage placeOrder() {
+        waitUntilOverlaysDisappears(overlay);
         driver.findElement(placeOrderButton).click();
+        LOGGER.debug("Placing an order");
         return this;
     }
 
-    public CheckOutPage enterState(String text) {
-        driver.findElement(stateDropDownButton).click();
-        driver.findElement(stateDropDownInputField).clear();
-        driver.findElement(stateDropDownInputField).sendKeys(text);
-        driver.findElement(stateDropDownInputField).sendKeys(Keys.ENTER);
+    public CheckOutPage selectCountry(String countryValue) {
+        Select select = new Select(driver.findElement(countryDropDown));
+        select.selectByValue(countryValue);
+        return this;
+    }
+
+    public CheckOutPage selectState(String stateValue) {
+        Select select = new Select(driver.findElement(countryDropDown));
+        select.selectByValue(stateValue);
         return this;
     }
 
     public String getNotice() {
+        waitUntilElementToBeVisible(successNotice);
         return driver.findElement(successNotice).getText();
+    }
+
+    public CheckOutPage selectDirectBankTransfer() {
+        LOGGER.debug("Selecting direct bank transfer");
+        waitUntilElementToBeClickable(directBankTransferRadioButton);
+        WebElement radioButton = driver.findElement(directBankTransferRadioButton);
+        if (!radioButton.isSelected()) {
+            radioButton.click();
+        }
+        return this;
+    }
+
+    public CheckOutPage setBillingAddressWithDefaultState(BillingAddress billingAddress) {
+        enterFirstName(billingAddress.getFirstName());
+        enterLastName(billingAddress.getLastName());
+        selectCountry(billingAddress.getCountry());
+        enterAddressLineFieldOne(billingAddress.getAddressLineOne());
+        enterCity(billingAddress.getCity());
+        selectState(billingAddress.getState());
+        enterPostcode(billingAddress.getPostcode());
+        enterEmail(billingAddress.getEmail());
+        return this;
     }
 
 }

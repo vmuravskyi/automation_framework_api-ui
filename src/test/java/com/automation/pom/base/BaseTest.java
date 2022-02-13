@@ -19,7 +19,6 @@ public class BaseTest {
         LOGGER.debug("Initializing driver");
         driver = new DriverManager().initializeDriver(driver);
         LOGGER.debug("Maximizing window size");
-        driver.manage().window().maximize();
     }
 
     @AfterTest
