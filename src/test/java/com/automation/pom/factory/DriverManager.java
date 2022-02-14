@@ -39,6 +39,7 @@ public class DriverManager {
                 WebDriverManager.chromedriver().setup();
                 LOGGER.debug("Browser type is set to default [CHROME]");
         }
+        return driver;
     }
 
 }
