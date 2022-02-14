@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class CartPageFactory extends BasePage {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @FindBy(how = How.XPATH, using = "//td[@class='product-name']")
     @CacheLookup

@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 
 public class CheckOutPage extends BasePage {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private By firstNameField = By.xpath("//input[@name='billing_first_name']");
     private By lastNameField = By.xpath("//input[@name='billing_last_name']");

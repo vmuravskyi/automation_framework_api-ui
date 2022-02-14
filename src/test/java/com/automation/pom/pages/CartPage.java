@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 public class CartPage extends BasePage {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private By productName = By.xpath("//td[@class='product-name']");
     private By checkoutButton = By.xpath("//a[@class='checkout-button button alt wc-forward']");

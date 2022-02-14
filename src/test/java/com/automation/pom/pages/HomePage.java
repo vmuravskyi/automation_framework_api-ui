@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final By storeMenuLink = By.cssSelector("#menu-item-1227 > a");
 
