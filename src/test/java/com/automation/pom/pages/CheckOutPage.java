@@ -5,9 +5,10 @@ import com.automation.pom.objects.BillingAddress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckOutPage extends BasePage {
 
@@ -21,13 +22,15 @@ public class CheckOutPage extends BasePage {
     private By email = By.xpath("//input[@id='billing_email']");
     private By placeOrderButton = By.xpath("//button[@id='place_order']");
     private By countryDropDown = By.id("billing_country");
+    private By alternateCountryDropDown = By.id("select2-billing_country-container");
     private By stateDropDown = By.id("billing_state");
+    private By alternateStateDropDown = By.id("select2-billing_state-container");
     private By stateDropDownInputField = By.xpath("//input[@class='select2-search__field']");
     private By overlay = By.cssSelector(".blockUI.blockOverlay");
     private By directBankTransferRadioButton = By.id("payment_method_bacs");
 
     private By successNotice = By.xpath(
-            "//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
+        "//p[@class='woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received']");
 
     public CheckOutPage(WebDriver driver) {
         super(driver);
@@ -78,14 +81,29 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckOutPage selectCountry(String countryValue) {
-        Select select = new Select(driver.findElement(countryDropDown));
-        select.selectByValue(countryValue);
+//        Select select = new Select(driver.findElement(countryDropDown));
+//        select.selectByValue(countryValue);
+//        return this;
+
+        waitUntilElementToBeClickable(alternateCountryDropDown);
+        driver.findElement(alternateCountryDropDown).click();
+        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='Ukraine']")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", e);
+        e.click();
         return this;
     }
 
     public CheckOutPage selectState(String stateValue) {
-        Select select = new Select(driver.findElement(countryDropDown));
-        select.selectByValue(stateValue);
+//        Select select = new Select(driver.findElement(countryDropDown));
+//        select.selectByValue(stateValue);
+//        return this;
+
+        waitUntilElementToBeClickable(alternateStateDropDown);
+        driver.findElement(alternateStateDropDown).click();
+        WebElement e =
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='" + stateValue + "']")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", e);
+        e.click();
         return this;
     }
 

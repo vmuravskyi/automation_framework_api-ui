@@ -61,6 +61,7 @@ public abstract class BasePage {
 
     protected void waitUntilElementToBeVisible(By by) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     protected void waitUntilElementToBeVisible(WebElement webElement) {

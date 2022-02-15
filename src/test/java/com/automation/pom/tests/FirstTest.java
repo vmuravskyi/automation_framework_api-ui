@@ -1,12 +1,12 @@
 package com.automation.pom.tests;
 
 import com.automation.pom.base.BaseTest;
+import com.automation.pom.objects.BillingAddress;
+import com.automation.pom.objects.Product;
 import com.automation.pom.pages.CartPage;
 import com.automation.pom.pages.CheckOutPage;
 import com.automation.pom.pages.HomePage;
 import com.automation.pom.pages.StorePage;
-import com.automation.pom.objects.BillingAddress;
-import com.automation.pom.objects.Product;
 import com.automation.pom.utils.JacksonUtils;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
@@ -19,36 +19,36 @@ public class FirstTest extends BaseTest {
 
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException {
+    public void guestCheckoutUsingDirectBankTransfer() {
 
         BillingAddress billingAddress =
-                JacksonUtils.deserializeJsonToObject("BillingAddress.json", BillingAddress.class);
+            JacksonUtils.deserializeJsonToObject("BillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
 
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         StorePage storePage = homePage.navigateToStoreUsingMenu();
         storePage.search(searchText);
 
-        new HomePage(driver).navigateToStoreUsingMenu().search(searchText);
+        new HomePage(getDriver()).navigateToStoreUsingMenu().search(searchText);
 
         Assertions.assertThat(storePage.getTitle())
-                .contains(expectedSearchText);
+            .contains(expectedSearchText);
 
         storePage.clickAddToCard(product.getName());
         CartPage cartPage = storePage.clickViewCard();
 
         Assertions.assertThat(
-                        cartPage.getProductName())
-                .isEqualTo(product.getName());
+                cartPage.getProductName())
+            .isEqualTo(product.getName());
 
         CheckOutPage checkOutPage = cartPage.checkout();
 
         checkOutPage.setBillingAddressWithDefaultState(billingAddress) // using dto for address information
-                .selectDirectBankTransfer()
-                .placeOrder();
+            .selectDirectBankTransfer()
+            .placeOrder();
 
         Assertions.assertThat(checkOutPage.getNotice())
-                .isEqualTo(expectedNoticeText);
+            .isEqualTo(expectedNoticeText);
 
     }
 

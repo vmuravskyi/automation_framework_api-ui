@@ -1,10 +1,10 @@
 {
     "firstName": "Volodymyr",
     "lastName": "Muravskyi",
-    "country": "UA",
+    "country": "Ukraine",
     "addressLineOne": "Street",
     "city": "Lviv",
-    "state": "LV",
+    "state": "Lviv Oblast",
     "postcode": "12345",
     "email": "v.muravskyi@gmail.com"
 }

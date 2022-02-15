@@ -1,10 +1,6 @@
 package com.automation.pom.factory;
 
-import static com.automation.pom.constants.DriverType.FIREFOX;
-
-import com.automation.pom.constants.DriverType;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.time.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -15,30 +11,29 @@ public class DriverManager {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public WebDriver initializeDriver() {
-        WebDriver driver = setUpDriverType(FIREFOX);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        return driver;
-    }
 
-    private WebDriver setUpDriverType(DriverType driverType) {
+    public WebDriver initializeDriver(String browser) {
         WebDriver driver;
 
-        switch (driverType) {
-            case CHROME: {
-                driver = new ChromeDriver();
+        switch (browser) {
+            case "chrome": {
+                LOGGER.debug("Setting up {} browser", browser);
                 WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
             }
-            case FIREFOX: {
-                driver = new FirefoxDriver();
+            case "firefox": {
+                LOGGER.debug("Setting up {} browser", browser);
                 WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
             }
-            default:
-                driver = new ChromeDriver();
-                WebDriverManager.chromedriver().setup();
-                LOGGER.debug("Browser type is set to default [CHROME]");
+            default: {
+                throw new IllegalStateException("Invalid browser name " + browser);
+            }
         }
+        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Currently using explicit waits
         return driver;
     }
 
