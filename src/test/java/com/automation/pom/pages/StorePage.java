@@ -15,7 +15,8 @@ public class StorePage extends BasePage {
     private final By title = By.xpath("//h1[@class='woocommerce-products-header__title page-title']");
     private final By resultItem = By.xpath("//ul[@class='products columns-4']/li");
     private final By viewCartLink = By.xpath("//div[@class='ast-cart-menu-wrap']");
-    private final By addedToCart = By.xpath("//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart added']");
+    private final By addedToCart = By.xpath(
+        "//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart added']");
 
     public StorePage(WebDriver driver) {
         super(driver);

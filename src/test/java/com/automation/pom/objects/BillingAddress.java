@@ -104,42 +104,42 @@ public class BillingAddress {
         BillingAddress that = (BillingAddress) o;
 
         return new EqualsBuilder()
-                .append(firstName, that.firstName)
-                .append(lastName, that.lastName)
-                .append(addressLineOne, that.addressLineOne)
-                .append(city, that.city)
-                .append(postcode, that.postcode)
-                .append(email, that.email)
-                .append(country, that.country)
-                .append(state, that.state).isEquals();
+            .append(firstName, that.firstName)
+            .append(lastName, that.lastName)
+            .append(addressLineOne, that.addressLineOne)
+            .append(city, that.city)
+            .append(postcode, that.postcode)
+            .append(email, that.email)
+            .append(country, that.country)
+            .append(state, that.state).isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(firstName)
-                .append(lastName)
-                .append(addressLineOne)
-                .append(city)
-                .append(postcode)
-                .append(email)
-                .append(country)
-                .append(state)
-                .toHashCode();
+            .append(firstName)
+            .append(lastName)
+            .append(addressLineOne)
+            .append(city)
+            .append(postcode)
+            .append(email)
+            .append(country)
+            .append(state)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .append("addressLineOne", addressLineOne)
-                .append("city", city)
-                .append("postcode", postcode)
-                .append("email", email)
-                .append("country", country)
-                .append("state", state)
-                .toString();
+            .append("firstName", firstName)
+            .append("lastName", lastName)
+            .append("addressLineOne", addressLineOne)
+            .append("city", city)
+            .append("postcode", postcode)
+            .append("email", email)
+            .append("country", country)
+            .append("state", state)
+            .toString();
     }
 
 }

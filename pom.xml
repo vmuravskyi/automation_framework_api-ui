@@ -31,11 +31,9 @@
                 <configuration>
                     <parallel>methods</parallel>
                     <threadCount>2</threadCount>
-<!--                    <suiteXmlFiles>-->
-<!--                        <suiteXmlFile>${suiteFile}</suiteXmlFile>-->
-<!--&lt;!&ndash;                         add another to run more then 1 testng.xml file&ndash;&gt;-->
-<!--&lt;!&ndash;                         <suiteXmlFile>testng.xml</suiteXmlFile> &ndash;&gt;-->
-<!--                    </suiteXmlFiles>-->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>
