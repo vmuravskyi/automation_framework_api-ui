@@ -52,4 +52,37 @@ public class FirstTest extends BaseTest {
 
     }
 
+    @Test
+    public void guestCheckoutUsingDirectBankTransferTwo() {
+
+        BillingAddress billingAddress =
+            JacksonUtils.deserializeJsonToObject("BillingAddress.json", BillingAddress.class);
+        Product product = new Product(1215);
+
+        HomePage homePage = new HomePage(getDriver());
+        StorePage storePage = homePage.navigateToStoreUsingMenu();
+        storePage.search(searchText);
+
+        new HomePage(getDriver()).navigateToStoreUsingMenu().search(searchText);
+
+        Assertions.assertThat(storePage.getTitle())
+            .contains(expectedSearchText);
+
+        storePage.clickAddToCard(product.getName());
+        CartPage cartPage = storePage.clickViewCard();
+
+        Assertions.assertThat(
+                cartPage.getProductName())
+            .isEqualTo(product.getName());
+
+        CheckOutPage checkOutPage = cartPage.checkout();
+
+        checkOutPage.setBillingAddressWithDefaultState(billingAddress) // using dto for address information
+            .selectDirectBankTransfer()
+            .placeOrder();
+
+        Assertions.assertThat(checkOutPage.getNotice())
+            .isEqualTo(expectedNoticeText);
+    }
+
 }

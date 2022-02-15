@@ -1,17 +1,17 @@
-<suite name="Suite1" verbose="1" >
+<suite name="Suite1" verbose="1" parallel="methods">
 
-    <test name="Regression1"   >
-        <parameter name="browser" value="chrome" />
+    <test name="Regression1" parallel="methods">
+        <parameter name="browser" value="chrome"/>
         <packages>
-            <package name="com.automation.pom.tests" />
+            <package name="com.automation.pom.tests"/>
         </packages>
     </test>
 
-    <test name="Firefox"   >
-        <parameter name="browser" value="firefox" />
-        <packages>
-            <package name="com.automation.pom.tests" />
-        </packages>
-    </test>
+<!--    <test name="Firefox" parallel="methods">-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <packages>-->
+<!--            <package name="com.automation.pom.tests"/>-->
+<!--        </packages>-->
+<!--    </test>-->
 
 </suite>

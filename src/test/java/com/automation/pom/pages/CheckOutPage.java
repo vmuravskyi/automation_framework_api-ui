@@ -99,7 +99,7 @@ public class CheckOutPage extends BasePage {
         waitUntilElementToBeClickable(alternateStateDropDown);
         driver.findElement(alternateStateDropDown).click();
         WebElement e =
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='" + stateValue + "']")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[text()='" + stateValue + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", e);
         e.click();
         return this;

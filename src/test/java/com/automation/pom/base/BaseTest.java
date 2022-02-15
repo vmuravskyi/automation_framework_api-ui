@@ -1,6 +1,5 @@
 package com.automation.pom.base;
 
-import com.automation.pom.constants.DriverType;
 import com.automation.pom.factory.DriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,9 +27,7 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeTest
     public void startDriver(@Optional("chrome") String browser) {
-        if (browser == null) {
-            browser = DriverType.CHROME.getValue();
-        }
+        browser = System.getProperty("browser", browser);
         LOGGER.debug("INITIALIZING DRIVER: " + driver.get() + " | CURRENT THREAD: " + Thread.currentThread().getId());
         setDriver(new DriverManager().initializeDriver(browser));
     }
@@ -48,5 +45,4 @@ public class BaseTest {
         LOGGER.debug("Navigating to base page [https://askomdch.com]");
         getDriver().navigate().to("https://askomdch.com");
     }
-
 }
