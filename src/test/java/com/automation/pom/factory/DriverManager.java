@@ -11,10 +11,8 @@ public class DriverManager {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-
     public WebDriver initializeDriver(String browser) {
         WebDriver driver;
-
         switch (browser) {
             case "chrome": {
                 LOGGER.debug("Setting up {} browser", browser);

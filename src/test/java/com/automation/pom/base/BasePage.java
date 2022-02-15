@@ -1,25 +1,29 @@
 package com.automation.pom.base;
 
+import java.time.Duration;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.List;
 
 public abstract class BasePage {
 
     private static final Logger LOGGER = LogManager.getLogger();
     protected WebDriverWait wait;
     protected WebDriver driver;
+    protected Wait<WebDriver> fluentWait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        fluentWait = new FluentWait<WebDriver>(driver);
 //        PageFactory.initElements(driver, this); In case of using PageFactory
     }
 
@@ -37,19 +41,12 @@ public abstract class BasePage {
         }
     }
 
-//     Fluent wait examples
-//     Waiting 30 seconds for an element to be present on the page, checking
-//     for its presence once every 5 seconds.
-//    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-//            .withTimeout(Duration.ofSeconds(30L))
-//            .pollingEvery(Duration.ofSeconds(1L))
-//            .ignoring(NoSuchElementException.class);
-//
-//    WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
-//        public WebElement apply(WebDriver driver) {
-//            return driver.findElement(By.id("foo"));
-//        }
-//    });
+    protected void fluentWaitIgnoringStaleElementReferenceException(By by) {
+        fluentWait = new FluentWait<WebDriver>(driver)
+            .withTimeout(Duration.ofSeconds(5L))
+            .pollingEvery(Duration.ofMillis(300L))
+            .ignoring(StaleElementReferenceException.class);
+    }
 
     protected void waitUntilElementToBeClickable(By by) {
         wait.until(ExpectedConditions.elementToBeClickable(by));
@@ -83,4 +80,5 @@ public abstract class BasePage {
     protected void restoreImplicitWait() {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
+
 }

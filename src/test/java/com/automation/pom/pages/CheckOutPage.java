@@ -81,23 +81,21 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckOutPage selectCountry(String countryValue) {
+//        Select does not work for Firefox
 //        Select select = new Select(driver.findElement(countryDropDown));
 //        select.selectByValue(countryValue);
 //        return this;
 
         waitUntilElementToBeClickable(alternateCountryDropDown);
         driver.findElement(alternateCountryDropDown).click();
-        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='Ukraine']")));
+        WebElement e = wait.until(
+            ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='" + countryValue + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", e);
         e.click();
         return this;
     }
 
     public CheckOutPage selectState(String stateValue) {
-//        Select select = new Select(driver.findElement(countryDropDown));
-//        select.selectByValue(stateValue);
-//        return this;
-
         waitUntilElementToBeClickable(alternateStateDropDown);
         driver.findElement(alternateStateDropDown).click();
         WebElement e =

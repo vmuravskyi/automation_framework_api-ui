@@ -1,17 +1,17 @@
 <suite name="Suite1" verbose="1" >
 
     <test name="Regression1"   >
-        <parameter name="browser" value="firefox" /> // example of sending a parameter
+        <parameter name="browser" value="chrome" />
         <packages>
             <package name="com.automation.pom.tests" />
         </packages>
     </test>
 
-<!--    <test name="Firefox"   >-->
-<!--        <parameter name="browser" value="firefox" />-->
-<!--        <packages>-->
-<!--            <package name="com.automation.pom.tests" />-->
-<!--        </packages>-->
-<!--    </test>-->
+    <test name="Firefox"   >
+        <parameter name="browser" value="firefox" />
+        <packages>
+            <package name="com.automation.pom.tests" />
+        </packages>
+    </test>
 
 </suite>

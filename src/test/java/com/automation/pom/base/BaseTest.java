@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 public class BaseTest {
@@ -25,11 +26,10 @@ public class BaseTest {
 
     @Parameters("browser")
     @BeforeTest
-//    @Optional("chrome")
-    public void startDriver(String browser) {
+    public void startDriver(@Optional("chrome") String browser) {
         browser = System.getProperty("browser", browser);
-        setDriver(new DriverManager().initializeDriver(browser));
         LOGGER.debug("INITIALIZING DRIVER: " + driver.get() + " | CURRENT THREAD: " + Thread.currentThread().getId());
+        setDriver(new DriverManager().initializeDriver(browser));
     }
 
     @AfterTest
