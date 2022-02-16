@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.automation</groupId>
-    <artifactId>automation_framework</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>MasterSeleniumFramework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <selenium.version>4.1.2</selenium.version>
-        <testng.version>7.5</testng.version>
-        <webdrivermanager.version>5.0.3</webdrivermanager.version>
-        <guava.version>31.0.1-jre</guava.version>
-        <assertj.version>3.22.0</assertj.version>
-        <log4j.version>2.17.1</log4j.version>
-        <jackson-databind.version>2.13.1</jackson-databind.version>
-        <suiteFile>testng.xml</suiteFile>
     </properties>
 
     <build>
@@ -29,68 +21,73 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-<!--                    <parallel>methods</parallel>-->
-<!--                    <threadCount>2</threadCount>-->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <parallel>methods</parallel>
+                    <threadCount>8</threadCount>
+<!--                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>-->
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <!-- SELENIUM -->
+        <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.0.0-beta-4</version>
         </dependency>
         <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
+            <version>7.3.0</version>
             <scope>test</scope>
+        </dependency>
+        <!--Jackson Databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.3</version>
         </dependency>
         <!-- WebDriverManager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>${webdrivermanager.version}</version>
+            <version>4.4.3</version>
         </dependency>
-        <!-- GUAVA -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <!-- AssertJ-Core -->
+        <!-- AssertJ -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
+            <version>3.22.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- Log4j-Core -->
+        <!-- Rest-assured -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.4.0</version>
+            <scope>test</scope>
         </dependency>
-        <!-- Log4j-API -->
+        <!-- Jsoup -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
         </dependency>
-        <!-- Jackson-Databind -->
+        <!-- Java Faker -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind.version}</version>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
         </dependency>
-
+        <!-- AShot -->
+        <dependency>
+            <groupId>ru.yandex.qatools.ashot</groupId>
+            <artifactId>ashot</artifactId>
+            <version>1.5.4</version>
+        </dependency>
     </dependencies>
-
 </project>
