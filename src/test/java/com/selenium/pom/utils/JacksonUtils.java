@@ -7,8 +7,8 @@ import java.io.InputStream;
 
 public class JacksonUtils {
 
-    public static <T> T deserializeJson(String fileName, Class<T> T) throws IOException {
-        InputStream is = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName);
+    public static <T> T deserializeJsonToObject(String fileName, Class<T> T) throws IOException {
+        InputStream is = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(is, T);
     }

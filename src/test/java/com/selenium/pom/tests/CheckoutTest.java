@@ -18,7 +18,7 @@ public class CheckoutTest extends BaseTest {
 
     @Test
     public void GuestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-        BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
+        BillingAddress billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress", BillingAddress.class);
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
 
         CartApi cartApi = new CartApi();
@@ -34,7 +34,7 @@ public class CheckoutTest extends BaseTest {
 
     @Test
     public void LoginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-        BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
+        BillingAddress billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress", BillingAddress.class);
         String username = "demouser" + new FakerUtils().generateRandomNumber();
         User user = new User().
                 setUsername(username).

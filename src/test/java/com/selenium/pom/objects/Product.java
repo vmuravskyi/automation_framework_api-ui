@@ -11,7 +11,7 @@ public class Product {
     public Product(){}
 
     public Product(int id) throws IOException {
-        Product[] products = JacksonUtils.deserializeJson("products.json", Product[].class);
+        Product[] products = JacksonUtils.deserializeJsonToObject("products", Product[].class);
         for(Product product: products){
             if(product.getId() == id){
                 this.id = id;

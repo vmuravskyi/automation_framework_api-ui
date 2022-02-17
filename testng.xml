@@ -4,14 +4,14 @@
     <test name="Chrome" thread-count="2" parallel="methods">
         <parameter name="browser" value="CHROME"/>
         <classes>
-            <class name="com.selenium.pom.tests.MyFirstTestCase"/>
+            <class name="com.selenium.pom.tests.FirstTest"/>
         </classes>
     </test>
 
     <test name="Firefox" thread-count="2" parallel="methods">
         <parameter name="browser" value="FIREFOX"/>
         <classes>
-            <class name="com.selenium.pom.tests.MyFirstTestCase"/>
+            <class name="com.selenium.pom.tests.FirstTest"/>
         </classes>
     </test>
 </suite>
