@@ -1,15 +1,25 @@
 package com.selenium.pom.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class JacksonUtils {
 
-    public static <T> T deserializeJsonToObject(String fileName, Class<T> T) throws IOException {
-        InputStream is = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
+    private final static Logger LOGGER = LogManager.getLogger();
+
+    public static <T> T deserializeJsonToObject(String fileName, Class<T> T) {
+        InputStream inputStream = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(is, T);
+        try {
+            LOGGER.debug("Deserializing [{}] into object", fileName);
+            return objectMapper.readValue(inputStream, T);
+        } catch (IOException e) {
+            LOGGER.debug("Failed to deserialize [{}] into object", "fileName");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

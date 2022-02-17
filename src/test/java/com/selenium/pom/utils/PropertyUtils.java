@@ -5,8 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PropertyUtils {
+
+    private final static Logger LOGGER = LogManager.getLogger();
 
     public static Properties propertyLoader(String filePath) {
         Properties properties = new Properties();
@@ -14,15 +18,17 @@ public class PropertyUtils {
         try {
             reader = new BufferedReader(new FileReader(filePath));
             try {
+                LOGGER.debug("Reading properties");
                 properties.load(reader);
                 reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new RuntimeException("failed to load properties file "+ filePath);
+                throw new RuntimeException("Failed to load properties file " + filePath);
             }
         } catch (FileNotFoundException e) {
+            LOGGER.debug("Failed to read properties");
             e.printStackTrace();
-            throw new RuntimeException("properties file not found at " + filePath);
+            throw new RuntimeException("Properties file not found at " + filePath);
         }
         return properties;
     }

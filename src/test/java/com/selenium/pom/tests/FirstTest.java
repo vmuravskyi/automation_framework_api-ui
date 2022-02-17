@@ -16,19 +16,20 @@ import org.testng.annotations.Test;
 
 public class FirstTest extends BaseTest {
 
-    private String expectedMessage = "Thank you. Your order has been received.";
-    private String searchFor = "Blue";
+    private final String expectedMessage = "Thank you. Your order has been received.";
+    private final String searchFor = "Blue";
+    private final BillingAddress billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress",
+        BillingAddress.class);
+    private final Product product = new Product(1215);
+    private final User user = new User(ConfigLoader.getInstance().getUsername(),
+        ConfigLoader.getInstance().getPassword());
 
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-
-        BillingAddress billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress",
-            BillingAddress.class);
-        Product product = new Product(1215);
-
-        StorePage storePage = new HomePage(getDriver()).
-            load().
-            getMyHeader().navigateToStoreUsingMenu()
+        StorePage storePage = new HomePage(getDriver())
+            .load()
+            .getMyHeader()
+            .navigateToStoreUsingMenu()
             .search(searchFor);
         Assertions.assertThat(storePage.getTitle())
             .contains(searchFor);
@@ -38,42 +39,40 @@ public class FirstTest extends BaseTest {
         Assertions.assertThat(cartPage.getProductName())
             .isEqualTo(product.getName());
 
-        CheckoutPage checkoutPage = cartPage.
-            checkout().
-            setBillingAddress(billingAddress).
-            selectDirectBankTransfer().
-            placeOrder();
+        CheckoutPage checkoutPage = cartPage
+            .checkout()
+            .setBillingAddress(billingAddress)
+            .selectDirectBankTransfer()
+            .placeOrder();
         Assertions.assertThat(checkoutPage.getNotice())
             .isEqualTo(expectedMessage);
     }
 
     @Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-        BillingAddress billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress", BillingAddress.class);
-        Product product = new Product(1215);
-        User user = new User(ConfigLoader.getInstance().getUsername(),
-            ConfigLoader.getInstance().getPassword());
-
-        StorePage storePage = new HomePage(getDriver()).
-            load().getMyHeader().
-            navigateToStoreUsingMenu().
-            search(searchFor);
+        StorePage storePage = new HomePage(getDriver())
+            .load()
+            .getMyHeader()
+            .navigateToStoreUsingMenu()
+            .search(searchFor);
         Assertions.assertThat(storePage.getTitle())
             .contains(searchFor);
 
         storePage.getProductThumbnail().clickAddToCartBtn(product.getName());
-        CartPage cartPage = storePage.getProductThumbnail().clickViewCart();
+        CartPage cartPage = storePage
+            .getProductThumbnail()
+            .clickViewCart();
         Assertions.assertThat(cartPage.getProductName())
             .isEqualTo(product.getName());
 
         CheckoutPage checkoutPage = cartPage.checkout();
         checkoutPage.clickHereToLoginLink();
 
-        checkoutPage.
-            login(user).
-            setBillingAddress(billingAddress).
-            selectDirectBankTransfer().
-            placeOrder();
+        checkoutPage
+            .login(user)
+            .setBillingAddress(billingAddress)
+            .selectDirectBankTransfer()
+            .placeOrder();
         Assertions.assertThat(checkoutPage.getNotice())
             .isEqualTo(expectedMessage);
     }

@@ -1,7 +1,7 @@
 package com.selenium.pom.utils;
 
-import java.util.Properties;
 import com.selenium.pom.constants.EnvType;
+import java.util.Properties;
 
 public class ConfigLoader {
 
@@ -9,16 +9,19 @@ public class ConfigLoader {
     private final Properties properties;
 
     private ConfigLoader() {
-        String env = System.getProperty("env", String.valueOf(EnvType.STAGE));
+        String env = System.getProperty("env", String.valueOf(EnvType.QA));
         switch (EnvType.valueOf(env)) {
-            case STAGE:
-                properties = PropertyUtils.propertyLoader("src/test/resources/stg_config.properties");
+            case QA: {
+                properties = PropertyUtils.propertyLoader("src/test/resources/qa_config.properties");
                 break;
-            case PRODUCTION:
-                properties = PropertyUtils.propertyLoader("src/test/resources/prod_config.properties");
+            }
+            case PRODUCTION: {
+                properties = PropertyUtils.propertyLoader("src/test/resources/production_config.properties");
                 break;
-            default:
-                throw new IllegalStateException("Invalid env type: " + env);
+            }
+            default: {
+                throw new IllegalStateException("Invalid environment type: " + env);
+            }
         }
     }
 
@@ -30,11 +33,11 @@ public class ConfigLoader {
     }
 
     public String getBaseUrl() {
-        String prop = properties.getProperty("baseUrl");
-        if (prop != null) {
-            return prop;
+        String url = properties.getProperty("baseUrl");
+        if (url != null) {
+            return url;
         } else {
-            throw new RuntimeException("property baseUrl is not specified in the stg_config.properties file");
+            throw new RuntimeException("Property baseUrl is not specified in the qa_config.properties file");
         }
     }
 
@@ -43,7 +46,7 @@ public class ConfigLoader {
         if (prop != null) {
             return prop;
         } else {
-            throw new RuntimeException("property username is not specified in the stg_config.properties file");
+            throw new RuntimeException("Property username is not specified in the qa_config.properties file");
         }
     }
 
@@ -52,7 +55,7 @@ public class ConfigLoader {
         if (prop != null) {
             return prop;
         } else {
-            throw new RuntimeException("property password is not specified in the stg_config.properties file");
+            throw new RuntimeException("Property password is not specified in the qa_config.properties file");
         }
     }
 }
