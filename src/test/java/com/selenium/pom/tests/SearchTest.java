@@ -3,19 +3,18 @@ package com.selenium.pom.tests;
 import com.selenium.pom.base.BaseTest;
 import com.selenium.pom.pages.StorePage;
 import org.assertj.core.api.Assertions;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SearchTest extends BaseTest {
 
     @Test
-    public void searchWithPartialMatch(){
+    public void searchWithPartialMatch() {
         String searchFor = "Blue";
         StorePage storePage = new StorePage(getDriver())
             .load()
             .search(searchFor);
-
-        Assertions.assertThat(storePage.getTitle())
-            .isEqualTo("Search results: “" + searchFor + "”");
+        Assertions.assertThat(storePage.getTitleAfterSearch())
+            .isEqualTo(String.format("Search results: “%s”", searchFor));
     }
+
 }

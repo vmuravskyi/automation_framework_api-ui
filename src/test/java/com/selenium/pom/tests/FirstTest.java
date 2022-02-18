@@ -31,7 +31,7 @@ public class FirstTest extends BaseTest {
             .getMyHeader()
             .navigateToStoreUsingMenu()
             .search(searchFor);
-        Assertions.assertThat(storePage.getTitle())
+        Assertions.assertThat(storePage.getTitleAfterSearch())
             .contains(searchFor);
 
         storePage.getProductThumbnail().clickAddToCartBtn(product.getName());
@@ -55,7 +55,7 @@ public class FirstTest extends BaseTest {
             .getMyHeader()
             .navigateToStoreUsingMenu()
             .search(searchFor);
-        Assertions.assertThat(storePage.getTitle())
+        Assertions.assertThat(storePage.getTitleAfterSearch())
             .contains(searchFor);
 
         storePage.getProductThumbnail().clickAddToCartBtn(product.getName());

@@ -55,7 +55,7 @@
         <Logger name="Rolling_File" level="debug" additivity="false">
             <AppenderRef ref="FileRolling"/>
         </Logger>
-        <Root level="DEBUG">
+        <Root level="INFO">
             <AppenderRef ref="FileLogger"/>
             <AppenderRef ref="Console" level="trace"/>
         </Root>

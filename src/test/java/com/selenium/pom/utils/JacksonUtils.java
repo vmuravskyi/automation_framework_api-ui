@@ -14,10 +14,10 @@ public class JacksonUtils {
         InputStream inputStream = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            LOGGER.debug("Deserializing [{}] into object", fileName);
+            LOGGER.info("Deserializing [{}] into object", fileName);
             return objectMapper.readValue(inputStream, T);
         } catch (IOException e) {
-            LOGGER.debug("Failed to deserialize [{}] into object", "fileName");
+            LOGGER.info("Failed to deserialize [{}] into object", "fileName");
             e.printStackTrace();
         }
         return null;

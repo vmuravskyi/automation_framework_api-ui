@@ -18,7 +18,7 @@ public class PropertyUtils {
         try {
             reader = new BufferedReader(new FileReader(filePath));
             try {
-                LOGGER.debug("Reading properties");
+                LOGGER.info("Reading properties");
                 properties.load(reader);
                 reader.close();
             } catch (IOException e) {
@@ -26,7 +26,7 @@ public class PropertyUtils {
                 throw new RuntimeException("Failed to load properties file " + filePath);
             }
         } catch (FileNotFoundException e) {
-            LOGGER.debug("Failed to read properties");
+            LOGGER.info("Failed to read properties");
             e.printStackTrace();
             throw new RuntimeException("Properties file not found at " + filePath);
         }

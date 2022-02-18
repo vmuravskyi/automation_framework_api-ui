@@ -1,40 +1,20 @@
 package com.selenium.pom.base;
 
-import com.selenium.pom.constants.DriverType;
-import com.selenium.pom.factory.abstractFactory.DriverManagerAbstract;
-import com.selenium.pom.factory.abstractFactory.DriverManagerFactoryAbstract;
-import com.selenium.pom.utils.CookieUtils;
-import io.restassured.http.Cookies;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import javax.imageio.ImageIO;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import com.selenium.pom.factory.DriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class BaseTest {
 
-    private final ThreadLocal<DriverManagerAbstract> driverManager = new ThreadLocal<>();
+    private final static Logger LOGGER = LogManager.getLogger();
     private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    protected DriverManagerAbstract getDriverManager() {
-        return this.driverManager.get();
-    }
-
-    private void setDriverManager(DriverManagerAbstract driverManager) {
-        this.driverManager.set(driverManager);
-    }
 
     protected WebDriver getDriver() {
         return this.driver.get();
@@ -51,13 +31,9 @@ public class BaseTest {
         if (browser == null) {
             browser = "CHROME";
         }
-//        setDriver(new DriverManagerOriginal().initializeDriver(browser));
-//        setDriver(DriverManagerFactory.getManager(DriverType.valueOf(browser)).createDriver());
-        setDriverManager(DriverManagerFactoryAbstract.
-            getManager(DriverType.valueOf(browser)));
-        setDriver(getDriverManager().getDriver());
-        System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " +
-            "DRIVER = " + getDriver());
+        LOGGER.info("Setting the driver for {}", browser);
+        setDriver(new DriverManager().initializeDriver(browser));
+        LOGGER.info("Current thread: " + Thread.currentThread().getId() + ", " + "Driver: " + getDriver());
     }
 
     @Parameters("browser")
@@ -69,42 +45,8 @@ public class BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " +
-            "DRIVER = " + getDriver());
-//        getDriver().quit();
-        if (result.getStatus() == ITestResult.FAILURE) {
-            File destFile = new File("scr" + File.separator + browser + File.separator +
-                result.getTestClass().getRealClass().getSimpleName() + "_" +
-                result.getMethod().getMethodName() + ".png");
-//            takeScreenshot(destFile);
-            takeScreenshotUsingAShot(destFile);
-        }
-        getDriverManager().getDriver().quit();
+        LOGGER.info("Quitting driver");
+        getDriver().quit();
     }
 
-    public void injectCookiesToBrowser(Cookies cookies) {
-        List<Cookie> seleniumCookies = new CookieUtils().convertRestAssuredCookiesToSeleniumCookies(cookies);
-        for (Cookie cookie : seleniumCookies) {
-            System.out.println(cookie.toString());
-            getDriver().manage().addCookie(cookie);
-        }
-    }
-
-    private void takeScreenshot(File destFile) throws IOException {
-        TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
-        File srcFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(srcFile, destFile);
-    }
-
-    private void takeScreenshotUsingAShot(File destFile) {
-        Screenshot screenshot = new AShot()
-            .shootingStrategy(ShootingStrategies.viewportPasting(100))
-            .takeScreenshot(getDriver());
-        try {
-            ImageIO.write(screenshot.getImage(), "PNG", destFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
