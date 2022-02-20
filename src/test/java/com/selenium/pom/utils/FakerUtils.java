@@ -4,8 +4,10 @@ import com.github.javafaker.Faker;
 
 public class FakerUtils {
 
-    public Long generateRandomNumber(){
-        Faker faker = new Faker();
-        return faker.number().randomNumber(10, true);
+
+
+    public Long generateRandomNumber() {
+        return new Faker().number().randomNumber(9, false);
     }
+
 }

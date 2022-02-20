@@ -5,7 +5,6 @@ import com.selenium.pom.objects.BillingAddress;
 import com.selenium.pom.objects.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,7 +35,7 @@ public class CheckoutPage extends BasePage {
 
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
 
-    private final By productName = By.cssSelector("td[class='product-name']");
+    private final By productName = By.xpath("//td[@class='product-name']");
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -62,11 +61,15 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage selectCountry(String countryName) {
-/*        Select select = new Select(driver.findElement(countryDropDown));
-        select.selectByVisibleText(countryName);*/
+
+//        Does not work for FireFox driver
+//        Select select = new Select(driver.findElement(countryDropDown));
+//        select.selectByVisibleText(countryName);
+
+        // another approach with js executor
         wait.until(ExpectedConditions.elementToBeClickable(alternateCountryDropDown)).click();
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//li[text()='" + countryName + "']")));
+                By.xpath("//li[text()='" + countryName + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
@@ -92,11 +95,15 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage selectState(String stateName) {
-/*        Select select = new Select(driver.findElement(stateDropDown));
-        select.selectByVisibleText(stateName);*/
+
+//        Does not work for FireFox driver
+//        Select select = new Select(driver.findElement(stateDropDown));
+//        select.selectByVisibleText(stateName);
+
+        // another approach with js executor
         wait.until(ExpectedConditions.elementToBeClickable(alternateStateDropDown)).click();
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//li[text()='" + stateName + "']")));
+                By.xpath("//li[text()='" + stateName + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
@@ -121,15 +128,15 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public CheckoutPage setBillingAddress(BillingAddress billingAddress) throws InterruptedException {
+    public CheckoutPage setBillingAddress(BillingAddress billingAddress) {
         return enterFirstName(billingAddress.getFirstName()).
-            enterLastName(billingAddress.getLastName()).
-            selectCountry(billingAddress.getCountry()).
-            enterAddressLineOne(billingAddress.getAddressLineOne()).
-            enterCity(billingAddress.getCity()).
-            selectState(billingAddress.getState()).
-            enterPostCode(billingAddress.getPostalCode()).
-            enterEmail(billingAddress.getEmail());
+                enterLastName(billingAddress.getLastName()).
+                selectCountry(billingAddress.getCountry()).
+                enterAddressLineOne(billingAddress.getAddressLineOne()).
+                enterCity(billingAddress.getCity()).
+                selectState(billingAddress.getState()).
+                enterPostCode(billingAddress.getPostalCode()).
+                enterEmail(billingAddress.getEmail());
     }
 
     public CheckoutPage placeOrder() {
@@ -168,9 +175,10 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage login(User user) {
-        return enterUserName(user.getUsername()).
-            enterPassword(user.getPassword()).
-            clickLoginBtn().waitForLoginBtnToDisappear();
+        return clickHereToLoginLink()
+                .enterUserName(user.getUsername()).
+                enterPassword(user.getPassword()).
+                clickLoginBtn().waitForLoginBtnToDisappear();
     }
 
     public CheckoutPage selectDirectBankTransfer() {
@@ -181,17 +189,8 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public String getProductName() throws Exception {
-        int i = 5;
-        while (i > 0) {
-            try {
-                return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
-            } catch (StaleElementReferenceException e) {
-                System.out.println("NOT FOUND. TRYING AGAIN" + e);
-            }
-            Thread.sleep(5000);
-            i--;
-        }
-        throw new Exception("Element not found");
+    public String getProductName() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(productName));
+        return driver.findElement(productName).getText();
     }
 }

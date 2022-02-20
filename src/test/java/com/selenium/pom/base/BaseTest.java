@@ -1,14 +1,19 @@
 package com.selenium.pom.base;
 
 import com.selenium.pom.factory.DriverManager;
+import com.selenium.pom.utils.CookieUtils;
+import io.restassured.http.Cookies;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+
+import java.util.List;
 
 public class BaseTest {
 
@@ -27,7 +32,7 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod
     public synchronized void startDriver(@Optional String browser) {
-//        browser = System.getProperty("browser", browser);
+        browser = System.getProperty("browser", browser);
         if (browser == null) {
             browser = "CHROME";
         }
@@ -47,6 +52,14 @@ public class BaseTest {
         }
         LOGGER.info("Quitting driver");
         getDriver().quit();
+    }
+
+    public void injectCookiesToBrowser(Cookies cookies) {
+        List<Cookie> seleniumCookies = new CookieUtils().covertRestAssuredCookiesToSeleniumCookies(cookies);
+        LOGGER.info("Injecting cookies into browser");
+        for (Cookie seleniumCookie : seleniumCookies) {
+            getDriver().manage().addCookie(seleniumCookie);
+        }
     }
 
 }
