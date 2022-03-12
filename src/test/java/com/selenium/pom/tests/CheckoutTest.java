@@ -14,11 +14,11 @@ import org.testng.annotations.Test;
 
 public class CheckoutTest extends BaseTest {
 
-    private final String expectedMessage = "Thank you. Your order has been received.";
-    private final Product product = new Product(1215);
-    private final BillingAddressDto billingAddressDto = JacksonUtils
+    private String expectedMessage = "Thank you. Your order has been received.";
+    private Product product = new Product(1215);
+    private BillingAddressDto billingAddressDto = JacksonUtils
             .deserializeJsonToObject("myBillingAddress", BillingAddressDto.class);
-    private final User user = new UserUtils().getRandomAutomationUser();
+    private User user = new UserUtils().getRandomAutomationUser();
 
     @Test
     public void guestCheckoutUserDirectBankTransfer() {
@@ -39,16 +39,16 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException {
+    public void loginAndCheckoutUsingDirectBankTransfer() {
         SignUpApi signUpApi = new SignUpApi();
         signUpApi.register(user);
         CartApi cartApi = new CartApi(signUpApi.getCookies());
         cartApi.addToCart(product, 1);
 
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
-        Thread.sleep(5000);
-        injectCookiesToBrowser(signUpApi.getCookies());
+        injectCookiesToBrowser(cartApi.getCookies());
         checkoutPage
+                .load()
                 .setBillingAddress(billingAddressDto)
                 .selectDirectBankTransfer()
                 .placeOrder();

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpApi {
+
     private Cookies cookies;
 
     public Cookies getCookies() {
