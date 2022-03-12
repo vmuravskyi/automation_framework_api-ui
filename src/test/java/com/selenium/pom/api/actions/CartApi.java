@@ -1,14 +1,13 @@
 package com.selenium.pom.api.actions;
 
+import com.selenium.pom.api.ApiRequest;
+import com.selenium.pom.constants.Endpoints;
 import com.selenium.pom.objects.Product;
-import com.selenium.pom.utils.ConfigLoader;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class CartApi {
 
@@ -36,18 +35,13 @@ public class CartApi {
             cookies = new Cookies();
         }
 
-        Response response = given()
-                .baseUri(ConfigLoader.getInstance().getBaseUrl())
-                .cookies(cookies)
-                .headers(RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()))
-                .formParams(formParams)
-                .log().all()
-                .when()
-                .post("/?wc-ajax=add_to_cart")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+        Response response = ApiRequest.post(
+                cookies,
+                RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()),
+                formParams,
+                Endpoints.ADD_TO_CART.getValue()
+        );
+
         if (response.getStatusCode() != 200) {
             throw new RuntimeException(String.format("Failed to add product [%s] to cart, HTTP status code: %s",
                     product.getName(), response.getStatusCode()));

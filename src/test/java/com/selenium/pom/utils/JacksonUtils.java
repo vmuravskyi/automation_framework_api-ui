@@ -11,7 +11,6 @@ public class JacksonUtils {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-
     public static <T> T deserializeJsonToObject(String fileName, Class<T> T) {
         InputStream inputStream = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
         ObjectMapper objectMapper = new ObjectMapper();

@@ -1,6 +1,7 @@
 package com.selenium.pom.objects;
 
-public class BillingAddress {
+public class BillingAddressDto {
+
     private String firstName;
     private String lastName;
     private String addressLineOne;
@@ -9,6 +10,20 @@ public class BillingAddress {
     private String email;
     private String country;
     private String state;
+
+    public BillingAddressDto() {
+        // default constructor
+    }
+
+    public BillingAddressDto(String firstName, String lastName, String addressLineOne, String city,
+                             String postalCode, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addressLineOne = addressLineOne;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.email = email;
+    }
 
     public String getCountry() {
         return country;
@@ -26,23 +41,11 @@ public class BillingAddress {
         this.state = state;
     }
 
-    public BillingAddress(){}
-
-    public BillingAddress(String firstName, String lastName, String addressLineOne, String city,
-                          String postalCode, String email){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.addressLineOne = addressLineOne;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public BillingAddress setFirstName(String firstName) {
+    public BillingAddressDto setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -51,7 +54,7 @@ public class BillingAddress {
         return lastName;
     }
 
-    public BillingAddress setLastName(String lastName) {
+    public BillingAddressDto setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -60,7 +63,7 @@ public class BillingAddress {
         return addressLineOne;
     }
 
-    public BillingAddress setAddressLineOne(String addressLineOne) {
+    public BillingAddressDto setAddressLineOne(String addressLineOne) {
         this.addressLineOne = addressLineOne;
         return this;
     }
@@ -69,7 +72,7 @@ public class BillingAddress {
         return city;
     }
 
-    public BillingAddress setCity(String city) {
+    public BillingAddressDto setCity(String city) {
         this.city = city;
         return this;
     }
@@ -78,7 +81,7 @@ public class BillingAddress {
         return postalCode;
     }
 
-    public BillingAddress setPostalCode(String postalCode) {
+    public BillingAddressDto setPostalCode(String postalCode) {
         this.postalCode = postalCode;
         return this;
     }
@@ -87,7 +90,7 @@ public class BillingAddress {
         return email;
     }
 
-    public BillingAddress setEmail(String email) {
+    public BillingAddressDto setEmail(String email) {
         this.email = email;
         return this;
     }

@@ -1,7 +1,7 @@
 package com.selenium.pom.pages;
 
 import com.selenium.pom.base.BasePage;
-import com.selenium.pom.objects.BillingAddress;
+import com.selenium.pom.objects.BillingAddressDto;
 import com.selenium.pom.objects.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -128,7 +128,7 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public CheckoutPage setBillingAddress(BillingAddress billingAddress) {
+    public CheckoutPage setBillingAddress(BillingAddressDto billingAddress) {
         return enterFirstName(billingAddress.getFirstName()).
                 enterLastName(billingAddress.getLastName()).
                 selectCountry(billingAddress.getCountry()).

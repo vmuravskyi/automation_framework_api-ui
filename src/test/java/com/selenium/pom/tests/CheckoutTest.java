@@ -3,7 +3,7 @@ package com.selenium.pom.tests;
 import com.selenium.pom.api.actions.CartApi;
 import com.selenium.pom.api.actions.SignUpApi;
 import com.selenium.pom.base.BaseTest;
-import com.selenium.pom.objects.BillingAddress;
+import com.selenium.pom.objects.BillingAddressDto;
 import com.selenium.pom.objects.Product;
 import com.selenium.pom.objects.User;
 import com.selenium.pom.pages.CheckoutPage;
@@ -16,8 +16,8 @@ public class CheckoutTest extends BaseTest {
 
     private final String expectedMessage = "Thank you. Your order has been received.";
     private final Product product = new Product(1215);
-    private final BillingAddress billingAddress = JacksonUtils
-            .deserializeJsonToObject("myBillingAddress", BillingAddress.class);
+    private final BillingAddressDto billingAddressDto = JacksonUtils
+            .deserializeJsonToObject("myBillingAddress", BillingAddressDto.class);
     private final User user = new UserUtils().getRandomAutomationUser();
 
     @Test
@@ -30,7 +30,7 @@ public class CheckoutTest extends BaseTest {
         injectCookiesToBrowser(cartApi.getCookies());
 
         checkoutPage.load()
-                .setBillingAddress(billingAddress)
+                .setBillingAddress(billingAddressDto)
                 .selectDirectBankTransfer()
                 .placeOrder();
 
@@ -49,7 +49,7 @@ public class CheckoutTest extends BaseTest {
         Thread.sleep(5000);
         injectCookiesToBrowser(signUpApi.getCookies());
         checkoutPage
-                .setBillingAddress(billingAddress)
+                .setBillingAddress(billingAddressDto)
                 .selectDirectBankTransfer()
                 .placeOrder();
 

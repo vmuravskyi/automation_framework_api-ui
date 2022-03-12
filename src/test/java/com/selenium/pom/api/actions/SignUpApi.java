@@ -1,7 +1,8 @@
 package com.selenium.pom.api.actions;
 
+import com.selenium.pom.api.ApiRequest;
+import com.selenium.pom.constants.Endpoints;
 import com.selenium.pom.objects.User;
-import com.selenium.pom.utils.ConfigLoader;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.jsoup.Jsoup;
@@ -10,8 +11,6 @@ import org.jsoup.nodes.Element;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class SignUpApi {
     private Cookies cookies;
@@ -40,16 +39,7 @@ public class SignUpApi {
 
     private Response getAccount() {
         Cookies cookies = new Cookies();
-        Response response = given()
-                .baseUri(ConfigLoader.getInstance().getBaseUrl())
-                .cookies(cookies)
-                .log().all()
-                .when()
-                .get("/account")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+        Response response = ApiRequest.get(cookies, Endpoints.ACCOUNT.getValue());
         if (response.getStatusCode() != 200) {
             throw new RuntimeException("Failed to fetch the account, HTTP status code: " + response.getStatusCode());
         }
@@ -67,18 +57,12 @@ public class SignUpApi {
         formParams.put("woocommerce-register-nonce", fetchRegisterNonceValueUsingJsoup());
         formParams.put("register", "Register");
 
-        Response response = given()
-                .baseUri(ConfigLoader.getInstance().getBaseUrl())
-                .cookies(cookies)
-                .headers(RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()))
-                .formParams(formParams)
-                .log().all()
-                .when()
-                .post("/account")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+        Response response = ApiRequest.post(
+                cookies,
+                RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()),
+                formParams,
+                Endpoints.ACCOUNT.getValue()
+        );
         if (response.getStatusCode() != 200) {
             throw new RuntimeException("Failed to register the account, HTTP status code: " + response.getStatusCode());
         }
