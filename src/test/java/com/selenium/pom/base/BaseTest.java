@@ -1,8 +1,10 @@
 package com.selenium.pom.base;
 
-import com.selenium.pom.factory.DriverManager;
+import com.selenium.pom.constants.DriverType;
+import com.selenium.pom.factory.DriverManagerFactory;
 import com.selenium.pom.utils.CookieUtils;
 import io.restassured.http.Cookies;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Cookie;
@@ -12,8 +14,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-
-import java.util.List;
 
 public class BaseTest {
 
@@ -36,8 +36,13 @@ public class BaseTest {
         if (browser == null) {
             browser = "CHROME";
         }
-        LOGGER.info("Setting the driver for {}", browser);
-        setDriver(new DriverManager().initializeDriver(browser));
+        LOGGER.info("Setting the driver for [{}]", browser);
+//        setDriver(new DriverManagerOriginal().initializeDriver(browser));
+        setDriver(
+            DriverManagerFactory
+                .getDriverManager(DriverType.valueOf(browser))
+                .createDriver()
+        );
         LOGGER.info("Current thread: " + Thread.currentThread().getId() + ", " + "Driver: " + getDriver());
     }
 

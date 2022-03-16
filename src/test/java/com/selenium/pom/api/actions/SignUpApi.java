@@ -1,7 +1,7 @@
 package com.selenium.pom.api.actions;
 
 import com.selenium.pom.api.ApiRequest;
-import com.selenium.pom.constants.Endpoints;
+import com.selenium.pom.constants.ApiEndpoint;
 import com.selenium.pom.objects.User;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
@@ -40,7 +40,7 @@ public class SignUpApi {
 
     private Response getAccount() {
         Cookies cookies = new Cookies();
-        Response response = ApiRequest.get(cookies, Endpoints.ACCOUNT.getValue());
+        Response response = ApiRequest.get(cookies, ApiEndpoint.ACCOUNT.getValue());
         if (response.getStatusCode() != 200) {
             throw new RuntimeException("Failed to fetch the account, HTTP status code: " + response.getStatusCode());
         }
@@ -62,7 +62,7 @@ public class SignUpApi {
                 cookies,
                 RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()),
                 formParams,
-                Endpoints.ACCOUNT.getValue()
+                ApiEndpoint.ACCOUNT.getValue()
         );
         if (response.getStatusCode() != 200) {
             throw new RuntimeException("Failed to register the account, HTTP status code: " + response.getStatusCode());

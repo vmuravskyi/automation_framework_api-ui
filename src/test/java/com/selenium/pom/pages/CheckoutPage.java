@@ -1,6 +1,7 @@
 package com.selenium.pom.pages;
 
 import com.selenium.pom.base.BasePage;
+import com.selenium.pom.constants.WebEndpoint;
 import com.selenium.pom.objects.BillingAddressDto;
 import com.selenium.pom.objects.User;
 import org.openqa.selenium.By;
@@ -11,7 +12,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutPage extends BasePage {
 
-    private final String checkoutPageEndpoint = "/checkout";
     private final By firstnameFld = By.id("billing_first_name");
     private final By lastNameFld = By.id("billing_last_name");
     private final By addressLineOneFld = By.id("billing_address_1");
@@ -42,7 +42,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage load() {
-        load(checkoutPageEndpoint);
+        load(WebEndpoint.CHECKOUT.getValue());
         return this;
     }
 
@@ -62,14 +62,14 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage selectCountry(String countryName) {
 
-//        Does not work for FireFox driver
+//        does not work for FireFox driver
 //        Select select = new Select(driver.findElement(countryDropDown));
 //        select.selectByVisibleText(countryName);
 
         // another approach with js executor
         wait.until(ExpectedConditions.elementToBeClickable(alternateCountryDropDown)).click();
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//li[text()='" + countryName + "']")));
+            By.xpath("//li[text()='" + countryName + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
@@ -96,14 +96,14 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage selectState(String stateName) {
 
-//        Does not work for FireFox driver
+//        does not work for FireFox driver
 //        Select select = new Select(driver.findElement(stateDropDown));
 //        select.selectByVisibleText(stateName);
 
         // another approach with js executor
         wait.until(ExpectedConditions.elementToBeClickable(alternateStateDropDown)).click();
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//li[text()='" + stateName + "']")));
+            By.xpath("//li[text()='" + stateName + "']")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
@@ -129,14 +129,14 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage setBillingAddress(BillingAddressDto billingAddress) {
-        return enterFirstName(billingAddress.getFirstName()).
-                enterLastName(billingAddress.getLastName()).
-                selectCountry(billingAddress.getCountry()).
-                enterAddressLineOne(billingAddress.getAddressLineOne()).
-                enterCity(billingAddress.getCity()).
-                selectState(billingAddress.getState()).
-                enterPostCode(billingAddress.getPostalCode()).
-                enterEmail(billingAddress.getEmail());
+        return enterFirstName(billingAddress.getFirstName())
+            .enterLastName(billingAddress.getLastName())
+            .selectCountry(billingAddress.getCountry())
+            .enterAddressLineOne(billingAddress.getAddressLineOne())
+            .enterCity(billingAddress.getCity())
+            .selectState(billingAddress.getState())
+            .enterPostCode(billingAddress.getPostalCode())
+            .enterEmail(billingAddress.getEmail());
     }
 
     public CheckoutPage placeOrder() {
@@ -176,9 +176,10 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage login(User user) {
         return clickHereToLoginLink()
-                .enterUserName(user.getUsername()).
-                enterPassword(user.getPassword()).
-                clickLoginBtn().waitForLoginBtnToDisappear();
+            .enterUserName(user.getUsername())
+            .enterPassword(user.getPassword())
+            .clickLoginBtn()
+            .waitForLoginBtnToDisappear();
     }
 
     public CheckoutPage selectDirectBankTransfer() {
@@ -193,4 +194,5 @@ public class CheckoutPage extends BasePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(productName));
         return driver.findElement(productName).getText();
     }
+
 }

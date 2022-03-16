@@ -1,6 +1,6 @@
 package com.selenium.pom.api;
 
-import com.selenium.pom.constants.Endpoints;
+import com.selenium.pom.constants.ApiEndpoint;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -11,7 +11,7 @@ public class SpecBuilder {
 
     public static RequestSpecification getRequestSpec() {
         return new RequestSpecBuilder()
-                .setBaseUri(Endpoints.BASE_URI.getValue())
+                .setBaseUri(ApiEndpoint.BASE_URI.getValue())
                 .log(LogDetail.ALL)
                 .build();
     }

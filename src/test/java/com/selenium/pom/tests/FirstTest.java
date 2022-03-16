@@ -28,7 +28,7 @@ public class FirstTest extends BaseTest {
     public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
         StorePage storePage = new HomePage(getDriver())
             .load()
-            .getMyHeader()
+            .getHeader()
             .navigateToStoreUsingMenu()
             .search(searchFor);
         Assertions.assertThat(storePage.getTitleAfterSearch())
@@ -52,7 +52,7 @@ public class FirstTest extends BaseTest {
     public void loginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
         StorePage storePage = new HomePage(getDriver())
             .load()
-            .getMyHeader()
+            .getHeader()
             .navigateToStoreUsingMenu()
             .search(searchFor);
         Assertions.assertThat(storePage.getTitleAfterSearch())
@@ -76,4 +76,5 @@ public class FirstTest extends BaseTest {
         Assertions.assertThat(checkoutPage.getNotice())
             .isEqualTo(expectedMessage);
     }
+
 }

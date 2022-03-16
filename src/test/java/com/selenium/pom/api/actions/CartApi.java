@@ -1,7 +1,7 @@
 package com.selenium.pom.api.actions;
 
 import com.selenium.pom.api.ApiRequest;
-import com.selenium.pom.constants.Endpoints;
+import com.selenium.pom.constants.ApiEndpoint;
 import com.selenium.pom.objects.Product;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
@@ -39,7 +39,7 @@ public class CartApi {
                 cookies,
                 RequestHeaders.getHeaders(RequestHeaders.CONTENT_TYPE.getHeader()),
                 formParams,
-                Endpoints.ADD_TO_CART.getValue()
+                ApiEndpoint.ADD_TO_CART.getValue()
         );
 
         if (response.getStatusCode() != 200) {

@@ -1,29 +1,30 @@
 package com.selenium.pom.pages;
 
 import com.selenium.pom.base.BasePage;
-import org.openqa.selenium.WebDriver;
-import com.selenium.pom.pages.components.MyHeader;
+import com.selenium.pom.pages.components.Header;
 import com.selenium.pom.pages.components.ProductThumbnail;
+import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
-    public MyHeader getMyHeader() {
-        return myHeader;
+
+    private final Header header;
+    private final ProductThumbnail productThumbnail;
+
+    public HomePage(WebDriver driver) {
+        super(driver);
+        header = new Header(driver);
+        productThumbnail = new ProductThumbnail(driver);
+    }
+
+    public Header getHeader() {
+        return header;
     }
 
     public ProductThumbnail getProductThumbnail() {
         return productThumbnail;
     }
 
-    private MyHeader myHeader;
-    private ProductThumbnail productThumbnail;
-
-    public HomePage(WebDriver driver) {
-        super(driver);
-        myHeader = new MyHeader(driver);
-        productThumbnail = new ProductThumbnail(driver);
-    }
-
-    public HomePage load(){
+    public HomePage load() {
         load("/");
         return this;
     }
