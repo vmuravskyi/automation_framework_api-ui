@@ -20,7 +20,7 @@ public class AddToCartTest extends BaseTest {
             .getProductThumbnail()
             .clickAddToCartBtn(product.getName())
             .clickViewCart();
-        Assertions.assertThat(cartPage.getProductName())
+        Assertions.assertThat(cartPage.getProductName() + "asd")
             .isEqualTo(product.getName());
     }
 
