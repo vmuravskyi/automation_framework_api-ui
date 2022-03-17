@@ -37,12 +37,23 @@ public class BaseTest {
             browser = "CHROME";
         }
         LOGGER.info("Setting the driver for [{}]", browser);
+
+//        set up webdriver with simple DriverManager
 //        setDriver(new DriverManagerOriginal().initializeDriver(browser));
+
+        // set up webdriver with DriverManager through interface
         setDriver(
             DriverManagerFactory
                 .getDriverManager(DriverType.valueOf(browser))
                 .createDriver()
         );
+
+//        set up webdriver with abstract DriverManager through abstract class
+//        setDriver(
+//            DriverManagerFactoryAbstract
+//                .getManager(DriverType.valueOf(browser))
+//                .getDriver()
+//        );
         LOGGER.info("Current thread: " + Thread.currentThread().getId() + ", " + "Driver: " + getDriver());
     }
 
