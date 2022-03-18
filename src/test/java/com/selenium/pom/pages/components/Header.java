@@ -18,4 +18,5 @@ public class Header extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(storeMenuLink)).click();
         return new StorePage(driver);
     }
+
 }
