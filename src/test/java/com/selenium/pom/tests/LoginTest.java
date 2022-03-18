@@ -43,7 +43,7 @@ public class LoginTest extends BaseTest {
         checkoutPage.load();
         checkoutPage.login(randomUser);
 
-        // Verify that the product name in the user's cart is same as the product added through API
+        // verify that the product name in the user's cart is same as the product added through API
         Assertions.assertThat(checkoutPage.getProductName())
                 .contains(product.getName());
     }

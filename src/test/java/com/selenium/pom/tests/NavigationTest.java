@@ -14,9 +14,10 @@ public class NavigationTest extends BaseTest {
 
         StorePage storePage = new HomePage(getDriver())
             .load()
-            .getMyHeader()
+            .getHeader()
             .navigateToStoreUsingMenu();
         Assertions.assertThat(storePage.getTitle())
             .isEqualTo(expectedStorePageTitle);
     }
+
 }

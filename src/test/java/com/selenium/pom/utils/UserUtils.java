@@ -10,9 +10,9 @@ public class UserUtils {
         String email = userName + "@gmail.com";
 
         return new User()
-                .setUsername(userName)
-                .setPassword(password)
-                .setEmail(email);
+            .setUsername(userName)
+            .setPassword(password)
+            .setEmail(email);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.selenium.pom.pages;
 
 import com.selenium.pom.base.BasePage;
+import com.selenium.pom.constants.WebEndpoint;
 import com.selenium.pom.pages.components.ProductThumbnail;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,8 +12,7 @@ public class StorePage extends BasePage {
     private final By searchFld = By.id("woocommerce-product-search-field-0");
     private final By searchBtn = By.cssSelector("button[value='Search']");
     private final By title = By.cssSelector(".woocommerce-products-header__title.page-title");
-    private final String storePageEndpoint = "/store";
-    private ProductThumbnail productThumbnail;
+    private final ProductThumbnail productThumbnail;
 
     public StorePage(WebDriver driver) {
         super(driver);
@@ -24,7 +24,7 @@ public class StorePage extends BasePage {
     }
 
     public StorePage load() {
-        load(storePageEndpoint);
+        load(WebEndpoint.STORE.getValue());
         return this;
     }
 
@@ -49,6 +49,7 @@ public class StorePage extends BasePage {
 
     /**
      * Use this method if you need to get a title of the page after searching something in the search field
+     *
      * @return The title of the Store page
      */
     public String getTitleAfterSearch() {
