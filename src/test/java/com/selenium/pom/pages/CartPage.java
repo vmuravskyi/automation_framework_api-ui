@@ -11,6 +11,9 @@ public class CartPage extends BasePage {
     private final By productName = By.cssSelector("td[class='product-name'] a");
     private final By checkoutBtn = By.cssSelector(".checkout-button");
     private final By cartHeading = By.cssSelector(".has-text-align-center");
+    private final By couponField = By.xpath("//input[@name='coupon_code']");
+    private final By applyCouponBtn = By.xpath("//button[@name='apply_coupon']");
+    private final By cartTotalsCoupon = By.xpath("//td[@data-title='Coupon: freeship']");
 
 //    @FindBy(css = "td[class='product-name'] a") private WebElement productName;
 //    @FindBy(how = How.CSS, using = ".checkout-button") @CacheLookup private WebElement checkoutBtn;
@@ -33,4 +36,17 @@ public class CartPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn)).click();
         return new CheckoutPage(driver);
     }
+
+    public CartPage addCoupon(String coupon) {
+        wait.until(ExpectedConditions.elementToBeClickable(applyCouponBtn));
+        driver.findElement(couponField).sendKeys(coupon);
+        driver.findElement(applyCouponBtn).click();
+        return this;
+    }
+
+    public String getCartTotalCoupon() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartTotalsCoupon));
+        return driver.findElement(cartTotalsCoupon).getText();
+    }
+
 }
