@@ -3,6 +3,7 @@ package com.selenium.pom.pages;
 import com.selenium.pom.base.BasePage;
 import com.selenium.pom.pages.components.Header;
 import com.selenium.pom.pages.components.ProductThumbnail;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
@@ -20,6 +21,7 @@ public class HomePage extends BasePage {
         return header;
     }
 
+    @Step
     public ProductThumbnail getProductThumbnail() {
         return productThumbnail;
     }

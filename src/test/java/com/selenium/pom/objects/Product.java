@@ -1,6 +1,7 @@
 package com.selenium.pom.objects;
 
 import com.selenium.pom.utils.JacksonUtils;
+import io.qameta.allure.Step;
 
 import java.io.IOException;
 

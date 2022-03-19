@@ -1,6 +1,7 @@
 package com.selenium.pom.api;
 
 import com.selenium.pom.constants.ApiEndpoint;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -13,17 +14,13 @@ public class SpecBuilder {
         return new RequestSpecBuilder()
                 .setBaseUri(ApiEndpoint.BASE_URI.getValue())
                 .log(LogDetail.ALL)
+                .addFilter(new AllureRestAssured())
                 .build();
     }
 
     public static ResponseSpecification getResponseSpec() {
         return new ResponseSpecBuilder()
-                .log(LogDetail.METHOD)
-                .log(LogDetail.URI)
-                .log(LogDetail.PARAMS)
-                .log(LogDetail.STATUS)
-                .log(LogDetail.HEADERS)
-                .log(LogDetail.COOKIES)
+                .log(LogDetail.ALL)
                 .build();
     }
 

@@ -2,6 +2,7 @@ package com.selenium.pom.pages;
 
 import com.selenium.pom.base.BasePage;
 import com.selenium.pom.constants.WebEndpoint;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,6 +29,7 @@ public class CartPage extends BasePage {
         return this;
     }
 
+    @Step
     public String getProductName() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
     }

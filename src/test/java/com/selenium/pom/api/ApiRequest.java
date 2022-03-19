@@ -1,5 +1,6 @@
 package com.selenium.pom.api;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.Cookies;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
