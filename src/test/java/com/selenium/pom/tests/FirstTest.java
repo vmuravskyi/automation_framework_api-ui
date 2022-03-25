@@ -18,7 +18,7 @@ public class FirstTest extends BaseTest {
 
     private final String expectedMessage = "Thank you. Your order has been received.";
     private final String searchFor = "Blue";
-    private final BillingAddressDto billingAddress = JacksonUtils.deserializeJsonToObject("myBillingAddress",
+    private final BillingAddressDto billingAddress = JacksonUtils.deserializeJsonFileToJsonObject("myBillingAddress",
         BillingAddressDto.class);
     private final Product product = new Product(1215);
     private final User user = new User(ConfigLoader.getInstance().getUsername(),

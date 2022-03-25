@@ -11,8 +11,8 @@ public class MyClass {
     @Test
     public void test() {
         given()
-                .when()
-                .then();
+            .when()
+            .then();
     }
 
 }

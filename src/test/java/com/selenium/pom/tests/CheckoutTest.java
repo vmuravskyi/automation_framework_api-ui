@@ -17,7 +17,7 @@ public class CheckoutTest extends BaseTest {
     private String expectedMessage = "Thank you. Your order has been received.";
     private Product product = new Product(1215);
     private BillingAddressDto billingAddressDto = JacksonUtils
-            .deserializeJsonToObject("myBillingAddress", BillingAddressDto.class);
+            .deserializeJsonFileToJsonObject("myBillingAddress", BillingAddressDto.class);
     private User user = new UserUtils().getRandomAutomationUser();
 
     @Test

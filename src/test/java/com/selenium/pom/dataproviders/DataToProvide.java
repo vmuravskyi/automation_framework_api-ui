@@ -8,7 +8,7 @@ public class DataToProvide {
 
     @DataProvider(name = "getFeaturedProduct", parallel = true)
     public Object[] getFeaturedProduct() {
-        return JacksonUtils.deserializeJsonToObject("products", Product[].class);
+        return JacksonUtils.deserializeJsonFileToJsonObject("products", Product[].class);
     }
 
 }

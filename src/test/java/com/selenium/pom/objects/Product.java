@@ -1,9 +1,6 @@
 package com.selenium.pom.objects;
 
 import com.selenium.pom.utils.JacksonUtils;
-import io.qameta.allure.Step;
-
-import java.io.IOException;
 
 public class Product {
     private int id;
@@ -13,7 +10,7 @@ public class Product {
 
     public Product(int id) {
         Product[] products = new Product[0];
-        products = JacksonUtils.deserializeJsonToObject("products", Product[].class);
+        products = JacksonUtils.deserializeJsonFileToJsonObject("products", Product[].class);
         for(Product product: products){
             if(product.getId() == id){
                 this.id = id;
