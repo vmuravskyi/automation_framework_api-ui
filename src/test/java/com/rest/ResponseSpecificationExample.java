@@ -5,68 +5,52 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import io.restassured.specification.SpecificationQuerier;
-import org.apache.hc.core5.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
+import static io.restassured.RestAssured.get;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ResponseSpecificationExample {
 
-    private RequestSpecification requestSpecification;
-    private ResponseSpecification responseSpecification;
-
     @BeforeClass
-    public void setUp() {
-        requestSpecification = new RequestSpecBuilder()
-                .setBaseUri("https://api.postman.com")
-                .addHeader("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
-                .log(LogDetail.ALL)
-                .build();
+    public void beforeClass(){
+/*        requestSpecification = with().
+                baseUri("https://api.postman.com").
+                header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305").
+                log().all();*/
+        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
+        requestSpecBuilder.setBaseUri("https://api.postman.com");
+        requestSpecBuilder.addHeader("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305");
+        requestSpecBuilder.log(LogDetail.ALL);
 
-//        responseSpecification = RestAssured.expect()
-//                .statusCode(HttpStatus.SC_OK)
-//                .contentType(ContentType.JSON)
-//                .log().all(); // logger doesn't work here, only in ResponseSpecBuilder
+        RestAssured.requestSpecification = requestSpecBuilder.build();
 
-        responseSpecification = new ResponseSpecBuilder()
-                .expectStatusCode(HttpStatus.SC_OK)
-                .expectContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
+/*        responseSpecification = RestAssured.expect().
+                statusCode(200).
+                contentType(ContentType.JSON).
+                log().all();*/
+
+        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder().
+                expectStatusCode(200).
+                expectContentType(ContentType.JSON).
+                log(LogDetail.ALL);
+        RestAssured.responseSpecification = responseSpecBuilder.build();
     }
 
     @Test
-    public void validateStatusCode() {
-        given().spec(requestSpecification)
-                .get("/workspaces")
-                .then().spec(responseSpecification);
+    public void validate_status_code(){
+        get("/workspaces");
     }
 
     @Test
-    public void validateResponseBody() {
-        Response response = given().spec(requestSpecification)
-                .get("/workspaces")
-                .then().spec(responseSpecification)
-                .extract()
-                .response();
-        assertThat(response.path("workspaces[0].name").toString())
-                .isEqualTo("Other");
+    public void validate_response_body(){
+        Response response = get("/workspaces").
+        then().
+                        extract().
+                        response();
+        assertThat(response.path("workspaces[0].name").toString(), equalTo("Team Workspace"));
     }
-
-    @Test
-    public void getDataFromRequestSpecification() {
-        String baseUri = SpecificationQuerier.query(requestSpecification)
-                .getBaseUri();
-        Header header = SpecificationQuerier.query(requestSpecification)
-                .getHeaders().get("X-Api-Key");
-        System.out.println("baseUri=" + baseUri + "\n" + header.getName() + "=" + header.getValue());
-    }
-
 }
