@@ -26,6 +26,7 @@
         <allure.version>2.17.3</allure.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
         <aspectj.version>1.9.8</aspectj.version>
+        <jackson.version>2.13.2.1</jackson.version>
     </properties>
 
     <build>
@@ -131,6 +132,13 @@
             <artifactId>allure-rest-assured</artifactId>
             <version>${allure.version}</version>
         </dependency>
+        <!-- Jackson Databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
 
     </dependencies>
 </project>

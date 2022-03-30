@@ -8,6 +8,8 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -100,15 +102,20 @@ public class AutomatePost {
 
     @Test
     public void validatePostRequestPayloadAsMap() {
-        File file = new File("src/test/resources/CreateWorkspacePayload.json");
+        Map<String, Object> mainObject = new HashMap<>();
+        Map<String, String> nestedObject = new HashMap<>();
+        nestedObject.put("name", "Workspace from post method from restAssured as HashMap");
+        nestedObject.put("type", "personal");
+        nestedObject.put("description", "Some description");
+        mainObject.put("workspace", nestedObject);
 
         ValidatableResponse response = given().spec(requestSpecification)
-                .body(file)
+                .body(mainObject)
                 .when()
                 .post("/workspaces")
                 .then().spec(responseSpecification)
                 .assertThat()
-                .body("workspace.name", Matchers.equalTo("Workspace from post method from json file"),
+                .body("workspace.name", Matchers.equalTo("Workspace from post method from restAssured as HashMap"),
                         "workspace.id", Matchers.matchesPattern("^[a-z0-9-]{36}$"));
     }
 
