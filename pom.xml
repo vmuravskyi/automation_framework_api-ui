@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>selenium_framework</artifactId>
+    <artifactId>automation_framework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -27,6 +27,8 @@
         <aspectj.version>1.9.8</aspectj.version>
         <jackson.version>2.13.2.1</jackson.version>
         <skyscreamer.version>1.5.0</skyscreamer.version>
+        <json-schema-validator.version>5.0.0</json-schema-validator.version>
+        <cucumber.version>7.2.3</cucumber.version>
     </properties>
 
     <build>
@@ -142,8 +144,22 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>${rest-assured.version}</version>
+            <version>${json-schema-validator.version}</version>
         </dependency>
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <!-- Cucumber TestNG -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+
 
     </dependencies>
 </project>
