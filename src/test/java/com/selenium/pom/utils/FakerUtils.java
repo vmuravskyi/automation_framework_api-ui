@@ -8,4 +8,8 @@ public class FakerUtils {
         return new Faker().number().randomNumber(9, false);
     }
 
+    public Long generateRandomNumber(int numberOfDigits) {
+        return new Faker().number().randomNumber(numberOfDigits, false);
+    }
+
 }

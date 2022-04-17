@@ -1,6 +1,7 @@
 package com.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.selenium.pom.utils.FakerUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,6 +14,8 @@ public class WorkspaceDto {
     private String name;
     @JsonProperty("type")
     private String type;
+    @JsonProperty("description")
+    private String description;
 
     public WorkspaceDto() {
         // default constructor
@@ -22,24 +25,36 @@ public class WorkspaceDto {
         return id;
     }
 
-    public void setId(String id) {
+    public WorkspaceDto setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public WorkspaceDto setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public WorkspaceDto setType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public String getDescription() {
+        return type;
+    }
+
+    public WorkspaceDto setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     @Override
@@ -58,6 +73,7 @@ public class WorkspaceDto {
             .append(id, that.id)
             .append(name, that.name)
             .append(type, that.type)
+            .append(description, that.description)
             .isEquals();
     }
 
@@ -67,6 +83,7 @@ public class WorkspaceDto {
             .append(id)
             .append(name)
             .append(type)
+            .append(description)
             .toHashCode();
     }
 
@@ -76,7 +93,16 @@ public class WorkspaceDto {
             .append("id", id)
             .append("name", name)
             .append("type", type)
+            .append("description", description)
             .toString();
+    }
+
+    public WorkspaceDto generateRandomWorkspace() {
+        FakerUtils fakerUtils = new FakerUtils();
+        return new WorkspaceDto()
+            .setName(String.valueOf(fakerUtils.generateRandomNumber()))
+            .setType(String.valueOf(fakerUtils.generateRandomNumber()))
+            .setDescription(String.valueOf(fakerUtils.generateRandomNumber()));
     }
 
 }

@@ -31,7 +31,7 @@ public class AutomateDeleteTest {
     }
 
     @Test
-    public void validate_delete_request_bdd_style() {
+    public void validateDeleteRequestBddStyle() {
         String workspaceId = "7e90387f-fdcc-4113-aca1-f633a0d1c55c";
         given()
             .pathParam("workspaceId", workspaceId)

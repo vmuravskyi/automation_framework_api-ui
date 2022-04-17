@@ -11,13 +11,14 @@ import org.testng.annotations.Test;
 public class AutomateHeadersTest {
 
     @Test
-    public void multiple_headers() {
+    public void multipleHeaders() {
         Header header = new Header("header", "value1");
         Header matchHeader = new Header("x-mock-match-request-headers", "header");
         given()
             .baseUri("https://8f6d7436-aba9-4c1f-bc81-fdc881a11fb1.mock.pstmn.io")
             .header(header)
             .header(matchHeader)
+            .log().all()
             .when()
             .get("/get")
             .then()
@@ -27,7 +28,7 @@ public class AutomateHeadersTest {
     }
 
     @Test
-    public void multiple_headers_using_Headers() {
+    public void multipleHeadersUsingHeaders() {
         Header header = new Header("header", "value2");
         Header matchHeader = new Header("x-mock-match-request-headers", "header");
 
@@ -45,7 +46,7 @@ public class AutomateHeadersTest {
     }
 
     @Test
-    public void multiple_headers_using_map() {
+    public void multipleHeadersUsingMap() {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("header", "value2");
         headers.put("x-mock-match-request-headers", "header");
@@ -62,7 +63,7 @@ public class AutomateHeadersTest {
     }
 
     @Test
-    public void multi_value_header_in_the_request() {
+    public void multiValueHeaderInTheRequest() {
         Header header1 = new Header("multiValueHeader", "value1");
         Header header2 = new Header("multiValueHeader", "value2");
 
@@ -81,8 +82,8 @@ public class AutomateHeadersTest {
     }
 
     @Test
-    public void assert_response_headers() {
-        HashMap<String, String> headers = new HashMap<String, String>();
+    public void assertResponseHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("header", "value1");
         headers.put("x-mock-match-request-headers", "header");
 
@@ -99,8 +100,8 @@ public class AutomateHeadersTest {
     }
 
     @Test
-    public void extract_response_headers() {
-        HashMap<String, String> headers = new HashMap<String, String>();
+    public void extractResponseHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("header", "value1");
         headers.put("x-mock-match-request-headers", "header");
 
@@ -119,15 +120,11 @@ public class AutomateHeadersTest {
             System.out.print("header name = " + header.getName() + ", ");
             System.out.println("header value = " + header.getValue());
         }
-
-/*        System.out.println("header name = " + extractedHeaders.get("responseHeader").getName());
-        System.out.println("header value = " + extractedHeaders.get("responseHeader").getValue());
-        System.out.println("header value = " + extractedHeaders.getValue("responseHeader"));*/
     }
 
     @Test
-    public void extract_multivalue_response_header() {
-        HashMap<String, String> headers = new HashMap<String, String>();
+    public void extractMultiValueResponseHeader() {
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("header", "value1");
         headers.put("x-mock-match-request-headers", "header");
 
@@ -147,4 +144,5 @@ public class AutomateHeadersTest {
             System.out.println(value);
         }
     }
+
 }

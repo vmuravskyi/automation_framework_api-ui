@@ -31,7 +31,7 @@ public class AutomatePutTest {
     }
 
     @Test
-    public void validate_put_request_bdd_style() {
+    public void validatePutRequestBddStyle() {
         String workspaceId = "4781f375-b7eb-4ec9-944f-1d676d609bbe";
         String payload = "{\n"
             + "    \"workspace\": {\n"
@@ -40,6 +40,7 @@ public class AutomatePutTest {
             + "        \"description\": \"Some description from put from restAssured\"\n"
             + "    }\n"
             + "}";
+
         given()
             .body(payload)
             .pathParam("workspaceId", workspaceId)

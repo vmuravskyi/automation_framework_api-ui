@@ -1,5 +1,10 @@
 package com.rest;
 
+import static io.restassured.RestAssured.get;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -9,19 +14,10 @@ import io.restassured.specification.SpecificationQuerier;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.get;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 public class RequestSpecificationExample {
 
     @BeforeClass
-    public void beforeClass(){
-/*        requestSpecification = with().
-                baseUri("https://api.postman.com").
-                header("X-Api-Key", "PMAK-5ff2d720d2a39a004250e5da-c658c4a8a1cee3516762cb1a51cba6c5e2").
-                log().all();*/
+    public void beforeClass() {
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setBaseUri("https://api.postman.com");
         requestSpecBuilder.addHeader("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305");
@@ -31,23 +27,24 @@ public class RequestSpecificationExample {
     }
 
     @Test
-    public void queryTest(){
+    public void queryTest() {
         QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.
-                query(RestAssured.requestSpecification);
+            query(RestAssured.requestSpecification);
         System.out.println(queryableRequestSpecification.getBaseUri());
         System.out.println(queryableRequestSpecification.getHeaders());
     }
 
     @Test
-    public void validate_status_code(){
+    public void validateStatusCode() {
         Response response = get("/workspaces").then().log().all().extract().response();
         assertThat(response.statusCode(), is(equalTo(200)));
     }
 
     @Test
-    public void validate_response_body(){
+    public void validateResponseBody() {
         Response response = get("/workspaces").then().log().all().extract().response();
         assertThat(response.statusCode(), is(equalTo(200)));
-        assertThat(response.path("workspaces[0].name").toString(), equalTo("Team Workspace"));
+        assertThat(response.path("workspaces[0].name").toString(), equalTo("Other"));
     }
+
 }

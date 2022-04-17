@@ -36,7 +36,7 @@ public class AutomatePostTest {
     }
 
     @Test
-    public void validate_post_request_bdd_style() {
+    public void validatePostRequestBddStyle() {
         String payload = "{\n" +
             "    \"workspace\": {\n" +
             "        \"name\": \"myFirstWorkspace\",\n" +
@@ -44,6 +44,7 @@ public class AutomatePostTest {
             "        \"description\": \"Rest Assured created this\"\n" +
             "    }\n" +
             "}";
+
         given()
             .body(payload)
             .when()
@@ -56,7 +57,7 @@ public class AutomatePostTest {
     }
 
     @Test
-    public void validate_post_request_non_bdd_style() {
+    public void validatePostRequestNonBddStyle() {
         String payload = "{\n" +
             "    \"workspace\": {\n" +
             "        \"name\": \"myFirstWorkspace2\",\n" +
@@ -73,7 +74,7 @@ public class AutomatePostTest {
     }
 
     @Test
-    public void validate_post_request_payload_from_file() {
+    public void validatePostRequestPayloadFromFile() {
         File file = new File("src/main/resources/CreateWorkspacePayload.json");
         given()
             .body(file)
@@ -87,10 +88,10 @@ public class AutomatePostTest {
     }
 
     @Test
-    public void validate_post_request_payload_as_map() {
-        HashMap<String, Object> mainObject = new HashMap<String, Object>();
+    public void validatePostRequestPayloadAsMap() {
+        HashMap<String, Object> mainObject = new HashMap<>();
 
-        HashMap<String, String> nestedObject = new HashMap<String, String>();
+        HashMap<String, String> nestedObject = new HashMap<>();
         nestedObject.put("name", "myThirdWorkspace");
         nestedObject.put("type", "personal");
         nestedObject.put("description", "Rest Assured created this");
@@ -107,4 +108,5 @@ public class AutomatePostTest {
             .body("workspace.name", equalTo("myThirdWorkspace"),
                 "workspace.id", matchesPattern("^[a-z0-9-]{36}$"));
     }
+
 }
