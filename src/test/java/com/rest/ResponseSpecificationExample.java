@@ -22,7 +22,7 @@ public class ResponseSpecificationExample {
     public void beforeClass() {
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setBaseUri("https://api.postman.com");
-        requestSpecBuilder.addHeader("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305");
+        requestSpecBuilder.addHeader("X-Api-Key", System.getenv("postman_api_key"));
         requestSpecBuilder.log(LogDetail.ALL);
 
         RestAssured.requestSpecification = requestSpecBuilder.build();
@@ -48,10 +48,10 @@ public class ResponseSpecificationExample {
 
     @Test
     public void validateResponseBody() {
-        Response response = get("/workspaces").
-            then().
-            extract().
-            response();
+        Response response = get("/workspaces")
+            .then()
+            .extract()
+            .response();
         assertThat(response.path("workspaces[0].name").toString(), equalTo("Other"));
     }
 

@@ -24,7 +24,7 @@ public class AutomateCrud {
     public void beforeClass() {
         requestSpecification = new RequestSpecBuilder()
             .setBaseUri("https://api.postman.com")
-            .addHeader("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .addHeader("X-Api-Key", System.getenv("postman_api_key"))
             .log(LogDetail.ALL)
             .build();
 

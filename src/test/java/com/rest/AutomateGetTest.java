@@ -31,7 +31,8 @@ public class AutomateGetTest {
     public void validateStatusCode() {
         given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
+            .log().all()
             .when()
             .get("/workspaces")
             .then()
@@ -44,7 +45,7 @@ public class AutomateGetTest {
     public void validateResponseBody() {
         given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()
@@ -64,7 +65,7 @@ public class AutomateGetTest {
     public void validateResponseBodyHamcrestLearnings() {
         given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()
@@ -86,7 +87,7 @@ public class AutomateGetTest {
     public void extractResponse() {
         Response res = given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()
@@ -101,7 +102,7 @@ public class AutomateGetTest {
     public void extractSingleValueFromResponse() {
         Response res = given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()
@@ -122,7 +123,7 @@ public class AutomateGetTest {
     public void hamcrestAssertOnExtractedResponse() {
         Response response = given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()
@@ -138,7 +139,7 @@ public class AutomateGetTest {
     public void getAllWorkspaces() {
         Response response = given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .when()
             .get("/workspaces")
             .then()

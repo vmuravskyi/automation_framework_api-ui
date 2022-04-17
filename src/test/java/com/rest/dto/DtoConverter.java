@@ -22,7 +22,7 @@ public class DtoConverter {
     public static Response getAllWorkSpaces() {
         return RestAssured.given()
             .baseUri("https://api.postman.com")
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .accept(ContentType.JSON)
             .when()
             .get("/workspaces")
@@ -34,7 +34,7 @@ public class DtoConverter {
     private void deleteJob(int id) {
         RestAssured.given()
             .baseUri("https://api.postman.com/workspaces/" + id)
-            .header("X-Api-Key", "PMAK-623731f9ae216434f3a7f279-a745745a851dd7107adc1360789eee7305")
+            .header("X-Api-Key", System.getenv("postman_api_key"))
             .accept(ContentType.JSON)
             .contentType(ContentType.JSON)
             .when()
