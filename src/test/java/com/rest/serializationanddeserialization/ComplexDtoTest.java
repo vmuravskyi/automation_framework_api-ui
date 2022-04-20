@@ -1,67 +1,56 @@
-package com.rest;
+package com.rest.serializationanddeserialization;
 
-import com.rest.dto.DtoConverter;
-import com.rest.dto.WorkSpaceRoot;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.serializationanddeserialization.pojo.collectionDto.CollectionDto;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.assertj.core.api.Assertions;
+import java.io.File;
+import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class AutomateCrud {
+public class ComplexDtoTest {
 
     RequestSpecification requestSpecification;
     ResponseSpecification responseSpecification;
-    WorkSpaceRoot workSpacesRoot = new WorkSpaceRoot();
 
     @BeforeClass
     public void beforeClass() {
         requestSpecification = new RequestSpecBuilder()
             .setBaseUri("https://api.postman.com")
+            .addHeader("X-Api-Key", "PMAK-625c2e4609b5351d8e310a67-788d3e5153e6aa26f8eb98e0cd694ef81b\n")
             .setContentType(ContentType.JSON)
-            .addHeader("X-Api-Key", System.getenv("postman_api_key"))
             .log(LogDetail.ALL)
             .build();
 
         responseSpecification = new ResponseSpecBuilder()
-            .expectStatusCode(200)
             .expectContentType(ContentType.JSON)
             .log(LogDetail.ALL)
             .build();
-
-//        workSpacesRoot.setWorkspaces(new WorkSpaceRoot().generateRandomListOfWorkspace());
     }
 
-    @Test()
-    public void post() {
-        Response response = RestAssured.given(requestSpecification)
-            .body(workSpacesRoot)
+    @Test
+    public void complexDtoCreateCollection() throws IOException {
+        CollectionDto collectionDto = new ObjectMapper().readValue(
+            new File("src/test/resources/filesToReadAsJson/collection.json"), CollectionDto.class);
+
+        CollectionDto collectionResponse = RestAssured.given(requestSpecification)
+            .body(collectionDto)
             .when()
-            .post("/workspaces")
+            .post("/collections")
             .then()
             .spec(responseSpecification)
-            .statusCode(200)
             .extract()
-            .response();
-        Assertions.assertThat(DtoConverter.getResponseAsDto(response, WorkSpaceRoot.class))
-            .isEqualTo(workSpacesRoot);
-    }
-
-    public void get() {
-    }
-
-    public void put() {
-    }
-
-    @Test()
-    public void delete() {
-
+            .response()
+            .as(CollectionDto.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String response = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(collectionResponse);
+        System.out.println(response);
     }
 
 }

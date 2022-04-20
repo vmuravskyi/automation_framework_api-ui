@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
 import com.rest.dto.DtoConverter;
-import com.rest.dto.WorkSpacesDto;
+import com.rest.dto.WorkSpaceRoot;
 import com.rest.dto.WorkspaceDto;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -149,12 +149,8 @@ public class AutomateGetTest {
             .extract()
             .response();
 
-        WorkSpacesDto workspaces = DtoConverter.getResponseAsDto(response, WorkSpacesDto.class);
-        WorkspaceDto workspace = workspaces.getWorkspaces()
-            .stream()
-            .filter(workspaceDto -> workspaceDto.getName().equals("Other"))
-            .findAny()
-            .orElseGet(WorkspaceDto::new);
+        WorkSpaceRoot workspaces = DtoConverter.getResponseAsDto(response, WorkSpaceRoot.class);
+        WorkspaceDto workspace = workspaces.getWorkspace();
         Assertions.assertThat(workspace.getType())
             .isEqualTo("team");
     }

@@ -1,11 +1,16 @@
 package com.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.selenium.pom.utils.FakerUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@JsonInclude(Include.NON_DEFAULT) // when building an object exclude fields which are null (e.g. Include.NON_NULL) and primitives with default value
+@JsonIgnoreProperties(value = "id", allowSetters = true) // allow only when deserializing response to this object, but not when reading this object to POST
 public class WorkspaceDto {
 
     @JsonProperty("id")
@@ -101,8 +106,8 @@ public class WorkspaceDto {
         FakerUtils fakerUtils = new FakerUtils();
         return new WorkspaceDto()
             .setName(String.valueOf(fakerUtils.generateRandomNumber()))
-            .setType(String.valueOf(fakerUtils.generateRandomNumber()))
-            .setDescription(String.valueOf(fakerUtils.generateRandomNumber()));
+            .setType("personal")
+            .setDescription("randomly generated workspace");
     }
 
 }

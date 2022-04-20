@@ -1,10 +1,14 @@
 package com.rest.dto;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +22,15 @@ public class DtoConverter {
         return response.getBody().as(t);
     }
 
+    public static <T> T getJsonFileAsDto(String filepath, Class<T> t) {
+        try {
+            return new ObjectMapper()
+                .readValue(new File("src/test/resources/filesToReadAsJson/complexJson.json"), t);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static Response getAllWorkSpaces() {
         return RestAssured.given()
