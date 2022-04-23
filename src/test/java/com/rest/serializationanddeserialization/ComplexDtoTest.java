@@ -1,6 +1,7 @@
 package com.rest.serializationanddeserialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.dto.CollectionResponseRootDto;
 import com.rest.serializationanddeserialization.pojo.collectionDto.CollectionDto;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -11,6 +12,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.io.File;
 import java.io.IOException;
+import org.apache.http.HttpStatus;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -39,18 +42,21 @@ public class ComplexDtoTest {
         CollectionDto collectionDto = new ObjectMapper().readValue(
             new File("src/test/resources/filesToReadAsJson/collection.json"), CollectionDto.class);
 
-        CollectionDto collectionResponse = RestAssured.given(requestSpecification)
+        CollectionResponseRootDto collectionResponseRootDto = RestAssured.given(requestSpecification)
             .body(collectionDto)
             .when()
             .post("/collections")
             .then()
             .spec(responseSpecification)
+            .assertThat()
+            .statusCode(HttpStatus.SC_OK)
             .extract()
             .response()
-            .as(CollectionDto.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String response = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(collectionResponse);
-        System.out.println(response);
+            .as(CollectionResponseRootDto.class);
+
+        Assertions.assertThat(collectionDto.getCollection().getInfo().getName())
+            .as(() -> "Comparing original collectionDto name to the one from response")
+            .isEqualTo(collectionResponseRootDto.getCollection().getName());
     }
 
 }
