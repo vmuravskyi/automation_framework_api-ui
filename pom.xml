@@ -17,6 +17,7 @@
         <testng.version>7.3.0</testng.version>
         <log4j.version>2.17.1</log4j.version>
         <webdrivermanager.version>4.4.3</webdrivermanager.version>
+        <selenide.version>6.4.0</selenide.version>
         <assertj.version>3.22.0</assertj.version>
         <rest-assured.version>4.4.0</rest-assured.version>
         <jsoup.version>1.13.1</jsoup.version>
@@ -89,6 +90,12 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
+        </dependency>
+        <!-- Selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
         </dependency>
         <!-- AssertJ -->
         <dependency>
