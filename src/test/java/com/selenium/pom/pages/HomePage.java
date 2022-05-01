@@ -11,10 +11,9 @@ public class HomePage extends BasePage {
     private final Header header;
     private final ProductThumbnail productThumbnail;
 
-    public HomePage(WebDriver driver) {
-        super(driver);
-        header = new Header(driver);
-        productThumbnail = new ProductThumbnail(driver);
+    public HomePage() {
+        header = new Header();
+        productThumbnail = new ProductThumbnail();
     }
 
     public Header getHeader() {

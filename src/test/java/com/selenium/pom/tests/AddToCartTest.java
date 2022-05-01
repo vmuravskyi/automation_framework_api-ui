@@ -23,7 +23,7 @@ public class AddToCartTest extends BaseTest {
     public void addToCartFromStorePage() {
         Product product = new Product(1215);
 
-        CartPage cartPage = new StorePage(getDriver())
+        CartPage cartPage = new StorePage()
                 .load()
                 .getProductThumbnail()
                 .clickAddToCartBtn(product.getName())
@@ -38,7 +38,7 @@ public class AddToCartTest extends BaseTest {
     @Test(dataProvider = "getFeaturedProduct", dataProviderClass = DataToProvide.class,
             description = "Verify ability to add a featured product to cart on Cart page")
     public void addToCartFeaturedProduct(Product product) {
-        CartPage cartPage = new HomePage(getDriver())
+        CartPage cartPage = new HomePage()
                 .load()
                 .getProductThumbnail()
                 .clickAddToCartBtn(product.getName())

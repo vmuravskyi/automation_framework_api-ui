@@ -4,7 +4,6 @@ import com.selenium.pom.base.BaseTest;
 import com.selenium.pom.objects.Product;
 import com.selenium.pom.pages.CartPage;
 import com.selenium.pom.pages.StorePage;
-import com.selenium.pom.utils.JacksonUtils;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
@@ -16,7 +15,7 @@ public class CartTest extends BaseTest {
         String coupon = "freeship";
         String expectedAppliedCoupon = "Free shipping coupon";
 
-        CartPage cartPage = new StorePage(getDriver())
+        CartPage cartPage = new StorePage()
             .load()
             .getProductThumbnail()
             .clickAddToCartBtn(product.getName())
@@ -25,7 +24,6 @@ public class CartTest extends BaseTest {
 
         Assertions.assertThat(cartPage.getCartTotalCoupon())
             .contains(expectedAppliedCoupon);
-
     }
 
 }

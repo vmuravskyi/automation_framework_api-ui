@@ -1,19 +1,15 @@
 package com.selenium.pom.factory;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 
 public class ChromeDriverManager implements DriverManager {
 
-    private WebDriver driver;
-
     @Override
-    public WebDriver createDriver() {
-        WebDriverManager.chromedriver().cachePath("drivers").setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        return driver;
+    public void createDriver() {
+        Configuration.browser = "chrome";
+        Configuration.browserSize = "1920x1080";
+        Selenide.open();
     }
 
 }

@@ -1,44 +1,50 @@
 package com.selenium.pom.pages;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
+
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import com.selenium.pom.base.BasePage;
 import com.selenium.pom.constants.WebEndpoint;
 import com.selenium.pom.objects.BillingAddressDto;
 import com.selenium.pom.objects.User;
+import io.cucumber.java.eo.Se;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutPage extends BasePage {
 
-    private final By firstnameFld = By.id("billing_first_name");
-    private final By lastNameFld = By.id("billing_last_name");
-    private final By addressLineOneFld = By.id("billing_address_1");
-    private final By billingCityFld = By.id("billing_city");
-    private final By billingPostCodeFld = By.id("billing_postcode");
-    private final By billingEmailFld = By.id("billing_email");
-    private final By placeOrderBtn = By.id("place_order");
-    private final By successNotice = By.cssSelector(".woocommerce-notice");
+    private final SelenideElement firstnameFld = $(By.id("billing_first_name"));
+    private final SelenideElement lastNameFld = $(By.id("billing_last_name"));
+    private final SelenideElement addressLineOneFld = $(By.id("billing_address_1"));
+    private final SelenideElement billingCityFld = $(By.id("billing_city"));
+    private final SelenideElement billingPostCodeFld = $(By.id("billing_postcode"));
+    private final SelenideElement billingEmailFld = $(By.id("billing_email"));
+    private final SelenideElement placeOrderBtn = $(By.id("place_order"));
+    private final SelenideElement successNotice = $(By.cssSelector(".woocommerce-notice"));
 
-    private final By clickHereToLoginLink = By.className("showlogin");
-    private final By usernameFld = By.id("username");
-    private final By passwordFld = By.id("password");
-    private final By loginBtn = By.name("login");
-    private final By overlay = By.cssSelector(".blockUI.blockOverlay");
+    private final SelenideElement clickHereToLoginLink = $(By.className("showlogin"));
+    private final SelenideElement usernameFld = $(By.id("username"));
+    private final SelenideElement passwordFld = $(By.id("password"));
+    private final SelenideElement loginBtn = $(By.name("login"));
+    private final ElementsCollection overlay = $$(".blockUI.blockOverlay");
 
-    private final By countryDropDown = By.id("billing_country");
-    private final By stateDropDown = By.id("billing_state");
+    private final SelenideElement countryDropDown = $(By.id("billing_country"));
+    private final SelenideElement stateDropDown = $(By.id("billing_state"));
 
-    private final By alternateCountryDropDown = By.id("select2-billing_country-container");
-    private final By alternateStateDropDown = By.id("select2-billing_state-container");
+    private final SelenideElement alternateCountryDropDown = $(By.id("select2-billing_country-container"));
+    private final SelenideElement alternateStateDropDown = $(By.id("select2-billing_state-container"));
 
-    private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
+    private final SelenideElement directBankTransferRadioBtn = $(By.id("payment_method_bacs"));
 
-    private final By productName = By.xpath("//td[@class='product-name']");
+    private final SelenideElement productName = $(By.xpath("//td[@class='product-name']"));
 
-    public CheckoutPage(WebDriver driver) {
-        super(driver);
+    public CheckoutPage() {
     }
 
     public CheckoutPage load() {
@@ -47,16 +53,16 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage enterFirstName(String firstName) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(firstnameFld));
-        e.clear();
-        e.sendKeys(firstName);
+        firstnameFld.shouldBe(Condition.visible);
+        firstnameFld.clear();
+        firstnameFld.sendKeys(firstName);
         return this;
     }
 
     public CheckoutPage enterLastName(String lastName) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameFld));
-        e.clear();
-        e.sendKeys(lastName);
+        lastNameFld.shouldBe(Condition.visible);
+        lastNameFld.clear();
+        lastNameFld.sendKeys(lastName);
         return this;
     }
 
@@ -67,10 +73,9 @@ public class CheckoutPage extends BasePage {
 //        select.selectByVisibleText(countryName);
 
         // another approach with js executor
-        wait.until(ExpectedConditions.elementToBeClickable(alternateCountryDropDown)).click();
-        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//li[text()='" + countryName + "']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
+        alternateCountryDropDown.shouldBe(Condition.visible, Condition.enabled).click();
+        SelenideElement e = $x("//li[text()='" + countryName + "']");
+        ((JavascriptExecutor) Selenide.webdriver().driver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -81,16 +86,16 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage enterAddressLineOne(String addressLineOne) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(addressLineOneFld));
-        e.clear();
-        e.sendKeys(addressLineOne);
+        addressLineOneFld.shouldBe(Condition.visible);
+        addressLineOneFld.clear();
+        addressLineOneFld.sendKeys(addressLineOne);
         return this;
     }
 
     public CheckoutPage enterCity(String city) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(billingCityFld));
-        e.clear();
-        e.sendKeys(city);
+        billingCityFld.shouldBe(Condition.visible);
+        billingCityFld.clear();
+        billingCityFld.sendKeys(city);
         return this;
     }
 
@@ -101,10 +106,9 @@ public class CheckoutPage extends BasePage {
 //        select.selectByVisibleText(stateName);
 
         // another approach with js executor
-        wait.until(ExpectedConditions.elementToBeClickable(alternateStateDropDown)).click();
-        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//li[text()='" + stateName + "']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
+        alternateStateDropDown.shouldBe(Condition.visible, Condition.enabled).click();
+        SelenideElement e = $x("//li[text()='" + stateName + "']");
+        ((JavascriptExecutor) Selenide.webdriver().driver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -115,16 +119,16 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage enterPostCode(String postCode) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(billingPostCodeFld));
-        e.clear();
-        e.sendKeys(postCode);
+        billingPostCodeFld.shouldBe(Condition.visible);
+        billingPostCodeFld.clear();
+        billingPostCodeFld.sendKeys(postCode);
         return this;
     }
 
     public CheckoutPage enterEmail(String email) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(billingEmailFld));
-        e.clear();
-        e.sendKeys(email);
+        billingEmailFld.shouldBe(Condition.visible);
+        billingEmailFld.clear();
+        billingEmailFld.sendKeys(email);
         return this;
     }
 
@@ -141,36 +145,36 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage placeOrder() {
         waitForOverlaysToDisappear(overlay);
-        driver.findElement(placeOrderBtn).click();
+        placeOrderBtn.shouldBe(Condition.visible).click();
         return this;
     }
 
     public String getNotice() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(successNotice)).getText();
+        return successNotice.shouldBe(Condition.visible).getText();
     }
 
     public CheckoutPage clickHereToLoginLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(clickHereToLoginLink)).click();
+        clickHereToLoginLink.shouldBe(Condition.visible, Condition.enabled).click();
         return this;
     }
 
     public CheckoutPage enterUserName(String username) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameFld)).sendKeys(username);
+        usernameFld.shouldBe(Condition.visible).sendKeys(username);
         return this;
     }
 
     public CheckoutPage enterPassword(String password) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordFld)).sendKeys(password);
+        passwordFld.shouldBe(Condition.visible).sendKeys(password);
         return this;
     }
 
     public CheckoutPage clickLoginBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
+        loginBtn.shouldBe(Condition.visible).click();
         return this;
     }
 
     private CheckoutPage waitForLoginBtnToDisappear() {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loginBtn));
+        loginBtn.shouldBe(Condition.not(Condition.visible));
         return this;
     }
 
@@ -183,16 +187,16 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage selectDirectBankTransfer() {
-        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(directBankTransferRadioBtn));
-        if (!e.isSelected()) {
-            e.click();
+        directBankTransferRadioBtn.shouldBe(Condition.visible, Condition.enabled);
+        if (!directBankTransferRadioBtn.isSelected()) {
+            directBankTransferRadioBtn.click();
         }
         return this;
     }
 
     public String getProductName() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(productName));
-        return driver.findElement(productName).getText();
+        productName.shouldBe(Condition.appear);
+        return productName.shouldBe(Condition.visible).getText();
     }
 
 }

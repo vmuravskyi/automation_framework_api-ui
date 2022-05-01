@@ -26,7 +26,7 @@ public class FirstTest extends BaseTest {
 
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-        StorePage storePage = new HomePage(getDriver())
+        StorePage storePage = new HomePage()
             .load()
             .getHeader()
             .navigateToStoreUsingMenu()
@@ -50,7 +50,7 @@ public class FirstTest extends BaseTest {
 
     @Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
-        StorePage storePage = new HomePage(getDriver())
+        StorePage storePage = new HomePage()
             .load()
             .getHeader()
             .navigateToStoreUsingMenu()

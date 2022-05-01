@@ -1,35 +1,36 @@
 package com.selenium.pom.pages.components;
 
+import static com.codeborne.selenide.Selenide.$;
+
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.selenium.pom.base.BasePage;
 import com.selenium.pom.pages.CartPage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductThumbnail extends BasePage {
 
-    private final By viewCartLink = By.cssSelector("a[title='View cart']");
+    private final SelenideElement viewCartLink = $("a[title='View cart']");
 
-    public ProductThumbnail(WebDriver driver) {
-        super(driver);
+    public ProductThumbnail() {
     }
 
-    private By getAddToCartBtnElement(String productName) {
-        return By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
+    private SelenideElement getAddToCartBtnElement(String productName) {
+        return $("a[aria-label='Add “" + productName + "” to your cart']");
     }
 
     @Step
     public ProductThumbnail clickAddToCartBtn(String productName) {
-        By addToCartBtn = getAddToCartBtnElement(productName);
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn)).click();
+        SelenideElement addToCartBtn = getAddToCartBtnElement(productName);
+        addToCartBtn.shouldBe(Condition.visible, Condition.enabled).click();
         return this;
     }
 
     @Step
     public CartPage clickViewCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
-        return new CartPage(driver);
+        viewCartLink.shouldBe(Condition.visible, Condition.enabled).click();
+        return new CartPage();
     }
 
 }

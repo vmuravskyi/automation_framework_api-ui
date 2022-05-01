@@ -34,7 +34,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginDuringCheckout() {
         // this will return to cart page as there's no cookies in the browser
-        CheckoutPage checkoutPage = new CheckoutPage(getDriver())
+        CheckoutPage checkoutPage = new CheckoutPage()
                 .load();
 
         injectCookiesToBrowser(cookies);

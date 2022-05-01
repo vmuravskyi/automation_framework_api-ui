@@ -10,7 +10,7 @@ public class SearchTest extends BaseTest {
     @Test
     public void searchWithPartialMatch() {
         String searchFor = "Blue";
-        StorePage storePage = new StorePage(getDriver())
+        StorePage storePage = new StorePage()
             .load()
             .search(searchFor);
         Assertions.assertThat(storePage.getTitleAfterSearch())

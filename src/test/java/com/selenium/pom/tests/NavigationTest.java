@@ -12,7 +12,7 @@ public class NavigationTest extends BaseTest {
     public void navigateFromHomeToStoreUsingMainMenu() {
         String expectedStorePageTitle = "Store";
 
-        StorePage storePage = new HomePage(getDriver())
+        StorePage storePage = new HomePage()
             .load()
             .getHeader()
             .navigateToStoreUsingMenu();

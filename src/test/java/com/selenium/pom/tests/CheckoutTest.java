@@ -23,7 +23,7 @@ public class CheckoutTest extends BaseTest {
     @Test
     public void guestCheckoutUserDirectBankTransfer() {
 
-        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+        CheckoutPage checkoutPage = new CheckoutPage().load();
 
         CartApi cartApi = new CartApi();
         cartApi.addToCart(product, 1);
@@ -45,7 +45,7 @@ public class CheckoutTest extends BaseTest {
         CartApi cartApi = new CartApi(signUpApi.getCookies());
         cartApi.addToCart(product, 1);
 
-        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+        CheckoutPage checkoutPage = new CheckoutPage().load();
         injectCookiesToBrowser(cartApi.getCookies());
         checkoutPage
                 .load()
