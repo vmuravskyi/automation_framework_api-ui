@@ -47,7 +47,7 @@ public class BaseTest {
         WaitFactory.sleep(300);
         // screenshot on failed test saved to build/reports/tests
         LOGGER.info("Quitting driver");
-        Selenide.webdriver().driver().getWebDriver().quit();
+        Selenide.closeWebDriver();
     }
 
     public void injectCookiesToBrowser(Cookies cookies) {
