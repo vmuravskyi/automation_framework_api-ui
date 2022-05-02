@@ -3,7 +3,9 @@ package com.selenium.pom.base;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.selenium.pom.utils.ConfigLoader;
+import java.time.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,7 +33,7 @@ public class BasePage {
         // TODO refactor according to deprecated method
         if (overlays.size() > 0) {
             overlays.shouldBe(CollectionCondition.allMatch("Each element is not visible",
-                webElement -> new WebDriverWait(Selenide.webdriver().driver().getWebDriver(), 5000)
+                webElement -> new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(5))
                     .until(ExpectedConditions.invisibilityOf(webElement))));
             LOGGER.info("Overlays invisible");
         } else {

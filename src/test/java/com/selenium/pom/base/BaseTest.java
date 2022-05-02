@@ -1,6 +1,7 @@
 package com.selenium.pom.base;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.selenium.pom.constants.DriverType;
 import com.selenium.pom.factory.DriverManagerFactory;
 import com.selenium.pom.utils.CookieUtils;
@@ -37,7 +38,7 @@ public class BaseTest {
             .createDriver()
         ;
         LOGGER.info("Current thread: " + Thread.currentThread().getId() + ", " + "Driver: " +
-            Selenide.webdriver().driver().getWebDriver());
+            WebDriverRunner.getWebDriver());
     }
 
     @Parameters("browser")
@@ -54,7 +55,7 @@ public class BaseTest {
         List<Cookie> seleniumCookies = new CookieUtils().covertRestAssuredCookiesToSeleniumCookies(cookies);
         LOGGER.info("Injecting cookies into browser");
         seleniumCookies.forEach(
-            cookie -> Selenide.webdriver().driver().getWebDriver().manage().addCookie(cookie)
+            cookie -> WebDriverRunner.getWebDriver().manage().addCookie(cookie)
         );
     }
 

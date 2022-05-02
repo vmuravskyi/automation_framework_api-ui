@@ -12,10 +12,7 @@ import com.selenium.pom.base.BasePage;
 import com.selenium.pom.constants.WebEndpoint;
 import com.selenium.pom.objects.BillingAddressDto;
 import com.selenium.pom.objects.User;
-import io.cucumber.java.eo.Se;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 
 public class CheckoutPage extends BasePage {
 
@@ -75,7 +72,7 @@ public class CheckoutPage extends BasePage {
         // another approach with js executor
         alternateCountryDropDown.shouldBe(Condition.visible, Condition.enabled).click();
         SelenideElement e = $x("//li[text()='" + countryName + "']");
-        ((JavascriptExecutor) Selenide.webdriver().driver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", e);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -108,7 +105,7 @@ public class CheckoutPage extends BasePage {
         // another approach with js executor
         alternateStateDropDown.shouldBe(Condition.visible, Condition.enabled).click();
         SelenideElement e = $x("//li[text()='" + stateName + "']");
-        ((JavascriptExecutor) Selenide.webdriver().driver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", e);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", e);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {

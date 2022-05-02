@@ -10,15 +10,24 @@ import com.selenium.pom.pages.CheckoutPage;
 import com.selenium.pom.utils.JacksonUtils;
 import com.selenium.pom.utils.UserUtils;
 import org.assertj.core.api.Assertions;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class CheckoutTest extends BaseTest {
 
-    private String expectedMessage = "Thank you. Your order has been received.";
-    private Product product = new Product(1215);
-    private BillingAddressDto billingAddressDto = JacksonUtils
-            .deserializeJsonFileToJsonObject("myBillingAddress", BillingAddressDto.class);
-    private User user = new UserUtils().getRandomAutomationUser();
+    private String expectedMessage;
+    private Product product;
+    private User user;
+    private BillingAddressDto billingAddressDto;
+
+    @BeforeClass
+    public void setUp() {
+        expectedMessage = "Thank you. Your order has been received.";
+        product = new Product(1215);
+        user = new UserUtils().getRandomAutomationUser();
+        billingAddressDto =
+            JacksonUtils.deserializeJsonFileToJsonObject("myBillingAddress", BillingAddressDto.class);
+    }
 
     @Test
     public void guestCheckoutUserDirectBankTransfer() {
@@ -30,12 +39,12 @@ public class CheckoutTest extends BaseTest {
         injectCookiesToBrowser(cartApi.getCookies());
 
         checkoutPage.load()
-                .setBillingAddress(billingAddressDto)
-                .selectDirectBankTransfer()
-                .placeOrder();
+            .setBillingAddress(billingAddressDto)
+            .selectDirectBankTransfer()
+            .placeOrder();
 
         Assertions.assertThat(checkoutPage.getNotice())
-                .isEqualTo(expectedMessage);
+            .isEqualTo(expectedMessage);
     }
 
     @Test
@@ -48,15 +57,13 @@ public class CheckoutTest extends BaseTest {
         CheckoutPage checkoutPage = new CheckoutPage().load();
         injectCookiesToBrowser(cartApi.getCookies());
         checkoutPage
-                .load()
-                .setBillingAddress(billingAddressDto)
-                .selectDirectBankTransfer()
-                .placeOrder();
+            .load()
+            .setBillingAddress(billingAddressDto)
+            .selectDirectBankTransfer()
+            .placeOrder();
 
         Assertions.assertThat(checkoutPage.getNotice())
-                .isEqualTo(expectedMessage);
-
-
+            .isEqualTo(expectedMessage);
     }
 
 }
