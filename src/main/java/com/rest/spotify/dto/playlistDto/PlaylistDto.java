@@ -28,35 +28,35 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class PlaylistDto {
 
     @JsonProperty("collaborative")
-    public Boolean collaborative;
+    private Boolean collaborative;
     @JsonProperty("description")
-    public String description;
+    private String description;
     @JsonProperty("external_urls")
-    public ExternalUrls externalUrls;
+    private ExternalUrls externalUrls;
     @JsonProperty("followers")
-    public Followers followers;
+    private Followers followers;
     @JsonProperty("href")
-    public String href;
+    private String href;
     @JsonProperty("id")
-    public String id;
+    private String id;
     @JsonProperty("images")
-    public List<Object> images = null;
+    private List<Object> images = null;
     @JsonProperty("name")
-    public String name;
+    private String name;
     @JsonProperty("owner")
-    public Owner owner;
+    private Owner owner;
     @JsonProperty("primary_color")
-    public Object primaryColor;
+    private Object primaryColor;
     @JsonProperty("public")
-    public Boolean _public;
+    private Boolean _public;
     @JsonProperty("snapshot_id")
-    public String snapshotId;
+    private String snapshotId;
     @JsonProperty("tracks")
-    public Tracks tracks;
+    private Tracks tracks;
     @JsonProperty("type")
-    public String type;
+    private String type;
     @JsonProperty("uri")
-    public String uri;
+    private String uri;
 
     public PlaylistDto() {
         // default constructor
