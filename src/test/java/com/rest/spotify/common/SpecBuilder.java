@@ -1,4 +1,4 @@
-package com.rest.spotify;
+package com.rest.spotify.common;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -12,8 +12,16 @@ public class SpecBuilder {
     public static RequestSpecification getRequestSpec() {
         return new RequestSpecBuilder()
             .setBaseUri("https://api.spotify.com")
-            .setBasePath("/v1")
+            .setBasePath(Endpoints.BASE_PATH)
             .setContentType(ContentType.JSON)
+            .log(LogDetail.ALL)
+            .build();
+    }
+
+    public static RequestSpecification getAccountRequestSpec() {
+        return new RequestSpecBuilder()
+            .setBaseUri("https://accounts.spotify.com")
+            .setContentType(ContentType.URLENC) // parameters should be form-urlencoded
             .log(LogDetail.ALL)
             .build();
     }

@@ -24,28 +24,38 @@ public class PlaylistTests {
             .set_public(false);
     }
 
+    private void assertPlaylistIsEqual(PlaylistDto responsePlaylistDto, PlaylistDto requestPlaylistDto) {
+        assertThat(responsePlaylistDto.getName()).isEqualTo(requestPlaylistDto.getName());
+        assertThat(responsePlaylistDto.getDescription()).isEqualTo(requestPlaylistDto.getDescription());
+        assertThat(responsePlaylistDto.get_public()).isEqualTo(requestPlaylistDto.get_public());
+    }
+
+    private void assertStatusCodeEqualTo(int actual, int expected) {
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @Test
     public void createPlaylist() {
 
         Response response = PlaylistApi.post(playlistDto);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
+        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_CREATED);
         createdPlaylistDto = response.as(PlaylistDto.class);
 
-        assertThat(createdPlaylistDto.getName()).isEqualTo(playlistDto.getName());
-        assertThat(createdPlaylistDto.getDescription()).isEqualTo(playlistDto.getDescription());
-        assertThat(createdPlaylistDto.get_public()).isEqualTo(playlistDto.get_public());
+        assertPlaylistIsEqual(createdPlaylistDto, playlistDto);
     }
 
     @Test
     public void getPlaylist() {
 
         Response response = PlaylistApi.get(createdPlaylistDto.getId());
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
         PlaylistDto playlist = response.as(PlaylistDto.class);
 
         assertThat(playlist.getName()).isEqualTo(playlistDto.getName());
         assertThat(playlist.getDescription()).isEqualTo(playlistDto.getDescription());
         assertThat(playlist.get_public()).isEqualTo(playlistDto.get_public());
+
+        assertPlaylistIsEqual(playlistDto, createdPlaylistDto);
     }
 
     @Test
@@ -64,6 +74,8 @@ public class PlaylistTests {
 
     @Test
     public void createPlaylistNegativeWithoutName() {
+        String errorMessage = "Missing required field: name";
+
         PlaylistDto playlistDto = new PlaylistDto().setName("")
             .setDescription("Some description")
             .set_public(false);
@@ -71,12 +83,14 @@ public class PlaylistTests {
         Response response = PlaylistApi.post(playlistDto);
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
-        assertThat(responseErrorDto.getError().getMessage()).isEqualTo("Missing required field: name");
+        assertThat(responseErrorDto.getError().getMessage()).isEqualTo(errorMessage);
         assertThat(responseErrorDto.getError().getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     public void createPlaylistNegativeWithoutToken() {
+        String errorMessage = "Invalid access token";
+
         PlaylistDto playlistDto = new PlaylistDto().setName("Some name")
             .setDescription("Some description")
             .set_public(false);

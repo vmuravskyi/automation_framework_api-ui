@@ -1,20 +1,16 @@
-package com.rest.spotify;
+package com.rest.spotify.common;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import java.util.Map;
 
 public class RestResource {
 
     public static Response postAccount(Map<String, Object> formParams) {
-        return RestAssured.given()
-            .baseUri("https://accounts.spotify.com")
-            .contentType(ContentType.URLENC) // parameters should be form-urlencoded
+        return RestAssured.given(SpecBuilder.getAccountRequestSpec())
             .formParams(formParams)
-            .log().all()
             .when()
-            .post("/api/token")
+            .post(Endpoints.API + Endpoints.TOKEN)
             .then()
             .spec(SpecBuilder.getResponseSpec())
             .extract()

@@ -1,5 +1,8 @@
-package com.rest.spotify;
+package com.rest.spotify.common;
 
+import com.rest.spotify.common.RestResource;
+import com.rest.spotify.common.TokenDto;
+import com.rest.spotify.utils.ConfigLoader;
 import io.restassured.response.Response;
 import java.time.Instant;
 import java.util.HashMap;
@@ -11,21 +14,16 @@ import org.apache.logging.log4j.Logger;
 public class TokenManager {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String CLIENT_ID = "ebe56da47bd1436dace22a5de08f3c44";
-    private static final String CLIENT_SECRET = "9bd505a72dd0490bbe2ebed353b854b7";
-    private static final String REDIRECT_URI = "https://localhost:8080";
-    private static final String GRAND_TYPE = "refresh_token";
-    private static final String REFRESH_TOKEN = "AQC_HNrWd_rjsg3Ss9XsCtKOVSYQA-BZ_b0AWjDdZsbAX4h-kYbGTYUYrk1wuZn1ntZkDHQTVi9YHkDq3GhMjutnugQbg89w8myCIeDmorIzbwkj-t1fTsjq6_exNnts7UI";
     private static TokenDto tokenDto;
 
     private static void renewToken() {
         // parameters
         Map<String, Object> formParams = new HashMap<>();
-        formParams.put("client_id", CLIENT_ID);
-        formParams.put("client_secret", CLIENT_SECRET);
-        formParams.put("redirect_uri", REDIRECT_URI);
-        formParams.put("grant_type", GRAND_TYPE);
-        formParams.put("refresh_token", REFRESH_TOKEN);
+        formParams.put("client_id", ConfigLoader.getInstance().getClientId());
+        formParams.put("client_secret", ConfigLoader.getInstance().getClientSecret());
+        formParams.put("redirect_uri", ConfigLoader.getInstance().getRedirectUri());
+        formParams.put("grant_type", ConfigLoader.getInstance().getGrantType());
+        formParams.put("refresh_token", ConfigLoader.getInstance().getRefreshToken());
 
         Response response = RestResource.postAccount(formParams);
 

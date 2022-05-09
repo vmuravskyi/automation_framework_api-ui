@@ -1,4 +1,4 @@
-package com.rest.spotify;
+package com.rest.spotify.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
