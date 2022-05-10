@@ -6,15 +6,22 @@ import com.rest.spotify.applicationapi.PlaylistApi;
 import com.rest.spotify.dto.errorDto.ErrorDto;
 import com.rest.spotify.dto.playlistDto.PlaylistDto;
 import com.selenium.pom.utils.JacksonUtils;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Epic("API: Spotify")
+@Feature("API: Playlist")
+@Story("Playlist: User is able to create, get, and update a playlist")
 public class PlaylistTests {
 
     private PlaylistDto playlistDto;
     private PlaylistDto createdPlaylistDto;
+    private PlaylistAsserts playlistAsserts;
 
     @BeforeClass
     public void setUp() {
@@ -22,48 +29,30 @@ public class PlaylistTests {
             .setName("New Playlist")
             .setDescription("New playlist description")
             .set_public(false);
+        playlistAsserts = new PlaylistAsserts();
     }
 
-    private void assertPlaylistIsEqual(PlaylistDto responsePlaylistDto, PlaylistDto requestPlaylistDto) {
-        assertThat(responsePlaylistDto.getName()).isEqualTo(requestPlaylistDto.getName());
-        assertThat(responsePlaylistDto.getDescription()).isEqualTo(requestPlaylistDto.getDescription());
-        assertThat(responsePlaylistDto.get_public()).isEqualTo(requestPlaylistDto.get_public());
-    }
-
-    private void assertStatusCodeEqualTo(int actual, int expected) {
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private void assertError(ErrorDto errorDto, int statusCode, String errorMessage) {
-        assertThat(errorDto.getError().getStatus()).isEqualTo(statusCode);
-        assertThat(errorDto.getError().getMessage()).isEqualTo(errorMessage);
-    }
-
-    @Test
+    @Test(description = "User is able to create a playlist")
     public void createPlaylist() {
 
         Response response = PlaylistApi.post(playlistDto);
-        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_CREATED);
+        playlistAsserts.assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_CREATED);
         createdPlaylistDto = response.as(PlaylistDto.class);
 
-        assertPlaylistIsEqual(createdPlaylistDto, playlistDto);
+        playlistAsserts.assertPlaylistIsEqual(createdPlaylistDto, playlistDto);
     }
 
-    @Test
+    @Test(description = "User is able to get a playlist")
     public void getPlaylist() {
 
         Response response = PlaylistApi.get(createdPlaylistDto.getId());
-        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
+        playlistAsserts.assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
         PlaylistDto playlist = response.as(PlaylistDto.class);
 
-        assertThat(playlist.getName()).isEqualTo(playlistDto.getName());
-        assertThat(playlist.getDescription()).isEqualTo(playlistDto.getDescription());
-        assertThat(playlist.get_public()).isEqualTo(playlistDto.get_public());
-
-        assertPlaylistIsEqual(playlistDto, createdPlaylistDto);
+        playlistAsserts.assertPlaylistIsEqual(playlistDto, createdPlaylistDto);
     }
 
-    @Test
+    @Test(description = "User is able to update a playlist")
     public void updatePlaylist() {
         // update info playlist user in 'createPlaylist' test
         playlistDto
@@ -74,10 +63,10 @@ public class PlaylistTests {
         Response response = PlaylistApi.put(createdPlaylistDto.getId(), playlistDto);
 
         // since there's empty body in response for PUT method, use only status code assertion
-        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
+        playlistAsserts.assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
-    @Test
+    @Test(description = "User is not able to create a playlist without playlist name")
     public void createPlaylistNegativeWithoutName() {
         String errorMessage = "Missing required field: name";
 
@@ -88,10 +77,10 @@ public class PlaylistTests {
         Response response = PlaylistApi.post(playlistDto);
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
-        assertError(responseErrorDto, HttpStatus.SC_BAD_REQUEST, errorMessage);
+        playlistAsserts.assertError(responseErrorDto, HttpStatus.SC_BAD_REQUEST, errorMessage);
     }
 
-    @Test
+    @Test(description = "User is able to create a playlist with invalid token")
     public void createPlaylistNegativeWithoutToken() {
         String errorMessage = "Invalid access token";
 
@@ -104,7 +93,7 @@ public class PlaylistTests {
         Response response = PlaylistApi.post(authorizationInvalidToken, playlistDto);
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
-        assertError(responseErrorDto, HttpStatus.SC_UNAUTHORIZED, errorMessage);
+        playlistAsserts.assertError(responseErrorDto, HttpStatus.SC_UNAUTHORIZED, errorMessage);
     }
 
 }
