@@ -69,7 +69,7 @@ public class PlaylistTests {
         Response response = PlaylistApi.put(createdPlaylistDto.getId(), playlistDto);
 
         // since there's empty body in response for PUT method, use only status code assertion
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
     @Test
