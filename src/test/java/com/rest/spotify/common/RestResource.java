@@ -19,7 +19,7 @@ public class RestResource {
 
     public static Response post(String token, String path, Object body) {
         return RestAssured.given(SpecBuilder.getRequestSpec())
-            .header("Authorization", "Bearer " + token)
+            .auth().oauth2(token)
             .body(body)
             .when()
             .post(path)
@@ -31,7 +31,7 @@ public class RestResource {
 
     public static Response get(String token, String path) {
         return RestAssured.given(SpecBuilder.getRequestSpec())
-            .header("Authorization", "Bearer " + token)
+            .auth().oauth2(token)
             .when()
             .get(path)
             .then()
@@ -42,7 +42,7 @@ public class RestResource {
 
     public static Response put(String token, String path, Object body) {
         return RestAssured.given(SpecBuilder.getRequestSpec())
-            .header("Authorization", "Bearer " + token)
+            .auth().oauth2(token)
             .body(body)
             .when()
             .put(path)

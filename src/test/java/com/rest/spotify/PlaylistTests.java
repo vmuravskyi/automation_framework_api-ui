@@ -9,6 +9,7 @@ import com.selenium.pom.utils.JacksonUtils;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
@@ -32,6 +33,7 @@ public class PlaylistTests {
         playlistAsserts = new PlaylistAsserts();
     }
 
+    @TmsLink("ID-123")
     @Test(description = "User is able to create a playlist")
     public void createPlaylist() {
 
@@ -42,6 +44,7 @@ public class PlaylistTests {
         playlistAsserts.assertPlaylistIsEqual(createdPlaylistDto, playlistDto);
     }
 
+    @TmsLink("ID-124")
     @Test(description = "User is able to get a playlist")
     public void getPlaylist() {
 
@@ -52,6 +55,7 @@ public class PlaylistTests {
         playlistAsserts.assertPlaylistIsEqual(playlistDto, createdPlaylistDto);
     }
 
+    @TmsLink("ID-125")
     @Test(description = "User is able to update a playlist")
     public void updatePlaylist() {
         // update info playlist user in 'createPlaylist' test
@@ -66,6 +70,7 @@ public class PlaylistTests {
         playlistAsserts.assertStatusCodeEqualTo(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
+    @TmsLink("ID-126")
     @Test(description = "User is not able to create a playlist without playlist name")
     public void createPlaylistNegativeWithoutName() {
         String errorMessage = "Missing required field: name";
@@ -80,6 +85,7 @@ public class PlaylistTests {
         playlistAsserts.assertError(responseErrorDto, HttpStatus.SC_BAD_REQUEST, errorMessage);
     }
 
+    @TmsLink("ID-127")
     @Test(description = "User is able to create a playlist with invalid token")
     public void createPlaylistNegativeWithoutToken() {
         String errorMessage = "Invalid access token";
