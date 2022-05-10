@@ -34,6 +34,11 @@ public class PlaylistTests {
         assertThat(actual).isEqualTo(expected);
     }
 
+    private void assertError(ErrorDto errorDto, int statusCode, String errorMessage) {
+        assertThat(errorDto.getError().getStatus()).isEqualTo(statusCode);
+        assertThat(errorDto.getError().getMessage()).isEqualTo(errorMessage);
+    }
+
     @Test
     public void createPlaylist() {
 
@@ -83,8 +88,7 @@ public class PlaylistTests {
         Response response = PlaylistApi.post(playlistDto);
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
-        assertThat(responseErrorDto.getError().getMessage()).isEqualTo(errorMessage);
-        assertThat(responseErrorDto.getError().getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        assertError(responseErrorDto, HttpStatus.SC_BAD_REQUEST, errorMessage);
     }
 
     @Test
@@ -100,8 +104,7 @@ public class PlaylistTests {
         Response response = PlaylistApi.post(authorizationInvalidToken, playlistDto);
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
-        assertThat(responseErrorDto.getError().getStatus()).isEqualTo(HttpStatus.SC_UNAUTHORIZED);
-        assertThat(responseErrorDto.getError().getMessage()).isEqualTo("Invalid access token");
+        assertError(responseErrorDto, HttpStatus.SC_UNAUTHORIZED, errorMessage);
     }
 
 }

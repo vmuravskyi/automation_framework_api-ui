@@ -12,28 +12,30 @@ public class JacksonUtils {
     private final static Logger LOGGER = LogManager.getLogger();
 
     public static <T> T deserializeJsonFileToJsonObject(String fileName, Class<T> T) {
+        T data = null;
         InputStream inputStream = JacksonUtils.class.getClassLoader().getResourceAsStream(fileName + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             LOGGER.info("Deserializing [{}] into object", fileName);
-            return objectMapper.readValue(inputStream, T);
+            data = objectMapper.readValue(inputStream, T);
         } catch (IOException e) {
             LOGGER.info("Failed to deserialize [{}] into object", "fileName");
             e.printStackTrace();
         }
-        return null;
+        return data;
     }
 
     public static <T> T deserializeResponseToObject(Response response, Class<T> T) {
+        T data = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             LOGGER.info("Deserializing response into object");
-            return objectMapper.readValue(response.asString(), T);
+            data = objectMapper.readValue(response.asString(), T);
         } catch (IOException e) {
             LOGGER.info("Failed to deserialize response into object");
             e.printStackTrace();
         }
-        return null;
+        return data;
     }
 
 }
