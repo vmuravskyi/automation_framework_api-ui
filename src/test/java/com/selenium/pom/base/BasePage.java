@@ -3,6 +3,7 @@ package com.selenium.pom.base;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideWait;
 import com.codeborne.selenide.WebDriverRunner;
 import com.selenium.pom.utils.ConfigLoader;
 import java.time.Duration;
@@ -29,10 +30,12 @@ public class BasePage {
     }
 
     protected void waitUntilPageDownload() {
-        new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(15)).until(
-            webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript("return document.readyState")
-                .equals("complete"));
+        new SelenideWait(WebDriverRunner.getWebDriver(), 15000, 300).until(
+            driver ->
+                ((JavascriptExecutor) driver)
+                    .executeScript("return document.readyState")
+                    .equals("complete")
+        );
     }
 
     protected void waitForOverlaysToDisappear(ElementsCollection overlay) {
