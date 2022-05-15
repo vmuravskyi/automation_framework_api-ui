@@ -1,8 +1,9 @@
-package com.rest.spotify;
+package com.rest.spotify.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.rest.spotify.applicationapi.PlaylistApi;
+import com.rest.spotify.assertions.PlaylistAsserts;
 import com.rest.spotify.dto.errorDto.ErrorDto;
 import com.rest.spotify.dto.playlistDto.PlaylistDto;
 import com.selenium.pom.utils.JacksonUtils;

@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Web-UI" verbose="1">
+
+    <test name="askomdch.com WebUI Tests" thread-count="4" parallel="classes">
+        <parameter name="browser" value="${browser.name}"/>
+        <packages>
+            <package name="com.selenium.pom.tests.*"/>
+        </packages>
+    </test>
+
+</suite>

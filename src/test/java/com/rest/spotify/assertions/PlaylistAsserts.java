@@ -1,4 +1,4 @@
-package com.rest.spotify;
+package com.rest.spotify.assertions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

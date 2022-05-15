@@ -2,6 +2,7 @@ package com.selenium.pom.base;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.selenium.pom.constants.DriverType;
 import com.selenium.pom.factory.DriverManagerFactory;
 import com.selenium.pom.utils.CookieUtils;
@@ -26,7 +27,7 @@ public class BaseTest {
     public synchronized void startDriver(@Optional String browser) {
         browser = System.getProperty("browser", browser);
 
-        // needed because browser will be 'null' if tests are run NOT from terminal or testng.xml
+        // needed because browser will be 'null' if tests are run NOT from terminal or Web-UI.xml
         if (browser == null) {
             browser = "CHROME";
         }
@@ -44,10 +45,8 @@ public class BaseTest {
     @Parameters("browser")
     @AfterMethod
     public synchronized void quitDriver(@Optional String browser, ITestResult result) {
-        // needed for normal quitting of the driver
-        WaitFactory.sleep(300);
         // screenshot on failed test saved to build/reports/tests
-        LOGGER.info("Quitting driver");
+        LOGGER.info("Quitting driver [{}]", browser);
         Selenide.closeWebDriver();
     }
 
