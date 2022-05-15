@@ -151,7 +151,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage clickHereToLoginLink() {
-        clickHereToLoginLink.shouldBe(Condition.visible, Condition.enabled).click();
+        clickHereToLoginLink.shouldBe(Condition.visible).click();
         return this;
     }
 
@@ -176,6 +176,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage login(User user) {
+        waitUntilPageDownload();
         return clickHereToLoginLink()
             .enterUserName(user.getUsername())
             .enterPassword(user.getPassword())

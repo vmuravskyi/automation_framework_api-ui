@@ -25,7 +25,7 @@ public class FirstTest extends BaseTest {
         ConfigLoader.getInstance().getPassword());
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
+    public void guestCheckoutUsingDirectBankTransfer() {
         StorePage storePage = new HomePage()
             .load()
             .getHeader()
@@ -49,7 +49,7 @@ public class FirstTest extends BaseTest {
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
+    public void loginAndCheckoutUsingDirectBankTransfer() {
         StorePage storePage = new HomePage()
             .load()
             .getHeader()
