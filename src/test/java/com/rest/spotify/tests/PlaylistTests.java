@@ -1,7 +1,5 @@
 package com.rest.spotify.tests;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.rest.spotify.applicationapi.PlaylistApi;
 import com.rest.spotify.assertions.PlaylistAsserts;
 import com.rest.spotify.dto.errorDto.ErrorDto;

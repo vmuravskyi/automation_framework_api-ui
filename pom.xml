@@ -44,7 +44,8 @@
 <!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>5</threadCount>-->
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>testng/API.xml</suiteXmlFile>
+                        <suiteXmlFile>testng/Web-UI.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"

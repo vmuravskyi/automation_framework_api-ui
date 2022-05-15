@@ -2,11 +2,9 @@ package com.selenium.pom.base;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import com.selenium.pom.constants.DriverType;
 import com.selenium.pom.factory.DriverManagerFactory;
 import com.selenium.pom.utils.CookieUtils;
-import com.selenium.pom.utils.WaitFactory;
 import io.restassured.http.Cookies;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -36,9 +34,9 @@ public class BaseTest {
         // set up web-driver
         DriverManagerFactory
             .getDriverManager(DriverType.valueOf(browser))
-            .createDriver()
-        ;
-        LOGGER.info("Current thread: " + Thread.currentThread().getId() + ", " + "Driver: " +
+            .createDriver();
+
+        LOGGER.info("Current thread: {}. Driver instance: {}", Thread.currentThread().getId(),
             WebDriverRunner.getWebDriver());
     }
 
