@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 
 public class DataToProvide {
 
-    @DataProvider(name = "getFeaturedProduct", parallel = true)
+    @DataProvider(name = "getFeaturedProduct", parallel = false)
     public Object[] getFeaturedProduct() {
         return JacksonUtils.deserializeJsonFileToJsonObject("products", Product[].class);
     }

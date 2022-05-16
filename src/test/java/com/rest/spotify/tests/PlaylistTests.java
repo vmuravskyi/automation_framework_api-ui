@@ -99,7 +99,7 @@ public class PlaylistTests {
         ErrorDto responseErrorDto = JacksonUtils.deserializeResponseToObject(response, ErrorDto.class);
 
         playlistAsserts.assertError(responseErrorDto, HttpStatus.SC_UNAUTHORIZED, errorMessage);
-        
+
     }
 
 }
