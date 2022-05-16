@@ -12,7 +12,7 @@ public class CartTest extends BaseTest {
     @Test
     public void validateThatCouponGivesFreeShipping() {
         Product product = new Product(1215);
-        String coupon = "freeshipp";
+        String coupon = "freeship";
         String expectedAppliedCoupon = "Free shipping coupon";
 
         CartPage cartPage = new StorePage()
