@@ -2,7 +2,7 @@
 
 <suite name="Web-UI" verbose="1">
 
-    <test name="askomdch.com WebUI Tests" thread-count="4" parallel="classes">
+    <test name="askomdch.com WebUI Tests" thread-count="5" parallel="classes">
         <parameter name="browser" value="${browser.name}"/>
         <packages>
             <package name="com.selenium.pom.tests.*"/>

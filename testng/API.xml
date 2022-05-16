@@ -2,7 +2,7 @@
 
 <suite name="Spotify API" verbose="1">
 
-    <test name="Spotify API Tests" thread-count="4" parallel="classes">
+    <test name="Spotify API Tests" thread-count="5" parallel="classes">
         <packages>
             <package name="com.rest.spotify.tests.*"/>
         </packages>
