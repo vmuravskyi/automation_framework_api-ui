@@ -29,7 +29,7 @@ public class BaseTest {
     private final static Logger LOGGER = LogManager.getLogger();
 
     @Parameters("browser")
-    @BeforeSuite
+    @BeforeMethod
     public synchronized void startDriver(@Optional String browser) {
 
         var webDriverSettings = new WebdriverSettings()
@@ -89,7 +89,7 @@ public class BaseTest {
     }
 
     @Parameters("browser")
-    @AfterSuite
+    @AfterMethod
     public synchronized void quitDriver(@Optional String browser, ITestResult result) {
         // screenshot on failed test saved to build/reports/tests in Selenide
 
