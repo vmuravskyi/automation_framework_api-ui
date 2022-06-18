@@ -1,6 +1,7 @@
 package com.selenium.pom.api.actions;
 
 import com.selenium.pom.api.ApiRequest;
+import com.selenium.pom.api.RequestHeaders;
 import com.selenium.pom.constants.ApiEndpoint;
 import com.selenium.pom.objects.User;
 import io.restassured.http.Cookies;

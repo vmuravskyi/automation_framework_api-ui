@@ -1,4 +1,4 @@
-package com.selenium.pom.api.actions;
+package com.selenium.pom.api;
 
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
