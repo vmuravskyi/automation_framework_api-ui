@@ -16,6 +16,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -30,25 +31,28 @@ public class BaseTest {
 
     @Parameters("browser")
     @BeforeMethod
-    public synchronized void startDriver(@Optional String browser) {
+    public synchronized void startDriver(ITestContext context, @Optional String browser) {
 
         var webDriverSettings = new WebdriverSettings()
                 .getSettings();
 
         if (webDriverSettings.getRemote().equals("true")) {
-
             String host = "localhost";
             if (System.getProperty("HUB_HOST") != null) {
                 host = System.getProperty("HUB_HOST");
             }
 
             MutableCapabilities capabilities;
-            if (System.getProperty("browser") != null && System.getProperty("browser").equalsIgnoreCase("FIREFOX")) {
+            if (System.getProperty("browser") != null && System.getProperty("browser")
+                    .equalsIgnoreCase("FIREFOX")) {
                 capabilities = new FirefoxOptions();
             } else {
                 browser = "CHROME";
                 capabilities = new ChromeOptions();
             }
+
+            // ITestContext allows to get information about parameters sent to test from .xml file
+            String testName = context.getCurrentXmlTest().getName();
 
             String completeUrl = "http://" + host + ":4444/wd/hub";
             try {
@@ -62,7 +66,6 @@ public class BaseTest {
             LOGGER.info("Current thread: {}. Driver instance: {}", Thread.currentThread().getId(),
                     WebDriverRunner.getWebDriver());
         } else {
-
             browser = System.getProperty("browser", browser);
             // needed because browser will be 'null' if tests are run NOT from terminal or Web-UI.xml
             if (browser == null) {

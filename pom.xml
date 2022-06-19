@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <selenium.version>4.2.2</selenium.version>
-        <testng.version>7.3.0</testng.version>
+        <testng.version>7.6.0</testng.version>
         <log4j.version>2.17.1</log4j.version>
         <webdrivermanager.version>4.4.3</webdrivermanager.version>
         <selenide.version>6.4.0</selenide.version>
@@ -25,6 +25,9 @@
         <ashot.version>1.5.4</ashot.version>
         <allure.version>2.17.3</allure.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
+        <maven-compiler.version>3.10.1</maven-compiler.version>
+        <maven-jar.version>3.2.2</maven-jar.version>
+        <maven-dependency.version>3.3.0</maven-dependency.version>
         <aspectj.version>1.9.8</aspectj.version>
         <jackson.version>2.13.2.1</jackson.version>
         <skyscreamer.version>1.5.0</skyscreamer.version>
@@ -34,6 +37,7 @@
     </properties>
 
     <build>
+        <finalName>dockerized-test-framework</finalName>
         <plugins>
 
             <plugin>
@@ -52,6 +56,63 @@
                     </argLine>
                 </configuration>
             </plugin>
+
+
+
+
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <configuration>
+                    <compilerVersion>11</compilerVersion>
+                    <source>11</source>
+                    <target>11</target>
+                    <testSource>11</testSource>
+                    <testTarget>11</testTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
+
+
+
         </plugins>
     </build>
 
