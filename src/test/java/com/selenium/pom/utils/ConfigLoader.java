@@ -1,7 +1,13 @@
 package com.selenium.pom.utils;
 
 import com.selenium.pom.constants.EnvType;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class ConfigLoader {
 
@@ -13,10 +19,12 @@ public class ConfigLoader {
         switch (EnvType.valueOf(env)) {
             case QA: {
                 properties = PropertyUtils.propertyLoader("src/test/resources/qa_config.properties");
+//                properties = PropertyUtils.propertyLoader("/qa_config.properties");
                 break;
             }
             case PRODUCTION: {
                 properties = PropertyUtils.propertyLoader("src/test/resources/production_config.properties");
+//                properties = PropertyUtils.propertyLoader("/production_config.properties");
                 break;
             }
             default: {
