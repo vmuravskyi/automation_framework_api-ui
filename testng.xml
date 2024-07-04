@@ -4,18 +4,18 @@
     <test name="Chrome" thread-count="5" parallel="methods">
         <parameter name="browser" value="CHROME"/>
         <classes>
-            <class name="com.selenium.pom.tests.AddToCartTest"/>
-            <class name="com.selenium.pom.tests.CheckoutTest"/>
-            <class name="com.selenium.pom.tests.LoginTest"/>
-            <class name="com.selenium.pom.tests.NavigationTest"/>
-            <class name="com.selenium.pom.tests.SearchTest"/>
+            <class name="tests.com.automation.AddToCartTest"/>
+            <class name="tests.com.automation.CheckoutTest"/>
+            <class name="tests.com.automation.LoginTest"/>
+            <class name="tests.com.automation.NavigationTest"/>
+            <class name="tests.com.automation.SearchTest"/>
         </classes>
     </test>
 
 <!--    <test name="Firefox" thread-count="2" parallel="methods">-->
 <!--        <parameter name="browser" value="FIREFOX"/>-->
 <!--        <classes>-->
-<!--            <class name="com.selenium.pom.tests.FirstTest"/>-->
+<!--            <class name="tests.com.automation.FirstTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 </suite>
